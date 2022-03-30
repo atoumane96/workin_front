@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+<div class="container-fluid white" style="display: flex;flex-direction: row;justify-content: space-between">
+  <ul class="breadcrumbs">
+    <li><a  routerLink="/archive" class="white-text">Type archive</a></li>
+    <li><a routerLink="/dossier" [queryParams]="{type: nomTypeArchive}" class="white-text">{{ nomTypeArchive | lowercase}}</a></li>
+    <li><a routerLink="/nature"  [queryParams]="{dossier: nomDossier,typeArchive:nomTypeArchive}" class="white-text">{{ nomDossier | lowercase}}</a></li>
+    <li><a routerLink="/fichier" [queryParams]="{nature:natureArchive,dossier:nomDossier,typeArchive:nomTypeArchive}">{{ natureArchive | lowercase}}</a></li>
+  </ul>
+  <div class="right">
+    <form #H="ngForm">
+      <div class="input-field">
+        <input type="text"  name="Recherche" placeholder="RECHERCHE?"
+               class="green-text grey white"
+               style="
+                            position: relative;
+                            display: flex;
+                            width: 300px;
+                            margin-right: 30px;
+                            border: 3px solid green;
+                            border-right: none;
+                            padding: 5px;
+                            height: 20px;
+                            border-radius: 5px 0 0 5px;
+                            outline: none;
+                            color: #9DBFAF;" ngModel>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container section">
+  <!--Nos utilisateurs -------------------------------------------------------------------->
+    <div class="row">
+      <div *ngFor="let fichier of listeFichier let i = index" class="card col s2" style="margin-left: 5px">
+        <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
+        <a href="{{fichier.urlFichier}}" class="card-image waves-effect waves-block waves-light" target="_blank">
+          <img class="center-align" src="../../../assets/icone_file/pdf.png" alt="ffichier" style="height: 100px;width: 100px;">
+          <p class="center-align">{{fichier.nomFichier.substr(0,17)}}</p>
+        </a>
+        <div class="card-content">
+          <p>
+            <i class="fa fa-clock-o"></i>
+            {{fichier.dateArchivage | date:'dd/MM/yyyy' }}
+            {{fichier.dateArchivage | date:'h:mm' }}
+          </p>
+        </div>
+
+
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">INFOS<i class="material-icons right">close</i></span>
+          <p><b>titre</b> : {{fichier.nomFichier}}</p>
+          <p><b>numero</b> : {{fichier.numeroArchivage}}</p>
+          <p><b>date publication</b> :  {{fichier.dateArchivage | date:'dd/MM/yyyy' }}
+                             {{fichier.dateArchivage | date:'h:mm:ss' }}</p>
+
+          <div style="display: flex;-ms-flex-direction: row; justify-content: space-around">
+            <a class="btn-floating btn-small waves-effect waves-light red"><i class="fa fa-trash"></i></a>
+            <a class="btn-floating btn-small waves-effect waves-light orange"><i class="fa fa-pencil"></i></a>
+            <a class="btn-floating btn-small waves-effect waves-light green"><i class="fa fa-eye"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  <div class="fixed-action-btn">
+    <a routerLink="#" class="btn-floating btn-large grey darken-3  pulse">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+
+
+</div>

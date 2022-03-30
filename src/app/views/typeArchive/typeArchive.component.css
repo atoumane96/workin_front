@@ -1,0 +1,18 @@
+@import "../../breadcumb.css";
+
+
+.tabs {
+  height: max-content;
+}
+
+.tab {
+  height: max-content;
+}
+
+.modal-header {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 5px;
+}

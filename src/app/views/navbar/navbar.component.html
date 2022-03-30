@@ -1,0 +1,83 @@
+ <nav>
+    <div class="container">
+        <div class="nav-wrapper">
+            <a routerLink="/dashboard" class="brand-logo center"><i class="green-text" style="font-family: papyrus,serif; font-weight: bold; font-size: larger;">
+                Work<span class="yellow-text">-In-</span><span class="red-text">22</span>
+            </i>
+        </a>
+          <ul  class="right hide-on-med-and-down">
+            <li>
+              <a routerLink="/archiver"  class="btn tooltipped btn-floating yellow darken-2 pulse" data-position="right" data-tooltip="archiver un fichier"><i class="material-icons left">add</i></a>
+            </li>
+          </ul>
+          <a href="" data-target="mobile-nav" class="sidenav-trigger show-on-large left">
+                <i class="material-icons">menu</i></a>
+            <!-- Sidenav menu du projet SenAdmin -------------------------------------------------------------->
+            <ul id="mobile-nav" class="sidenav">
+                <li>
+                  <div class="user-view  darken-4 z-depth-1" style="background: #01170c">
+                      <a href="#">
+                       <img src="../../../assets/image/USERICONS4.png" width="100px" class="responsive-img"  alt="" srcset="">
+                       </a>
+                       <a href="">
+                           <span class="name">
+                              {{prenom}} {{nom}}
+                           </span>
+                       </a>
+                       <a href="">
+                           <span class="email">
+                              {{email}}
+                           </span>
+                       </a>
+                  </div>
+                 </li>
+                 <li>
+                   <a href=""  class="white-text hoverable" routerLink="/dashboard">
+                      <i class="material-icons white-text">dashboard</i>
+                      Tableau de bord
+                    </a>
+                  </li>
+                 <li>
+                   <a href=""  class="white-text hoverable"  routerLink="/archive">
+                     <i class="material-icons white-text">file_present</i>
+                       Gestion d'archives
+                   </a>
+                   </li>
+                 <li *ngIf="departement == 'RH' ">
+                     <a href="" class="white-text hoverable" routerLink="/rh">
+                         <i class="material-icons white-text">filter_hdr</i>
+                         Gestion RH
+                    </a>
+                 </li>
+                 <li>
+                     <a href="" class="white-text hoverable" routerLink="/Departement" >
+                         <i class="material-icons white-text">person_identity</i>
+                         Administration
+                     </a>
+                   </li>
+                   <li>
+                    <a href="" class="white-text hoverable" routerLink="/info" >
+                        <i class="material-icons white-text">info</i>
+                        Information
+                    </a>
+                  </li>
+                <li>
+                   <a class="supheader white-text hoverable">
+                       <i class="material-icons white-text">settings</i>
+                       Parametres
+                   </a>
+                </li>
+                <li>
+                   <a (click)="onlogout()" class="waves-effect white-text hoverable">
+                       <i class="material-icons white-text">logout</i>
+                        Déconnexion
+                   </a>
+                </li>
+              <li>
+                <div class="divider grey"></div>
+              </li>
+               </ul>
+           </div>
+       </div>
+   </nav>
+<router-outlet></router-outlet>

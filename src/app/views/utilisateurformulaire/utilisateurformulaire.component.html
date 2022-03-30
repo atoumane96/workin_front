@@ -1,0 +1,246 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="card-panel grey lighten-2" style="border-radius: 20px;">
+    <div class="modal-header green darken-4">
+      <h5 class="white-text center-align" style="font-family:serif;font-weight: bold;">Ajoutez un employé</h5>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()">
+      <div *ngIf="step == 1">
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">person</i>
+          <input type="text" id="nom" class="" formControlName="nom">
+          <label for="nom" class="grey-text text-darken-3"><span class="red-text">*</span>Nom</label>
+          <span *ngIf="userForm.get('nom').errors && (userForm.get('nom').touched || userForm.get('nom').dirty)">
+           <span class="red-text"  *ngIf="userForm.get('nom').errors.required">
+              Ce champs est obligatoire
+           </span>
+           <span class="red-text"  *ngIf="userForm.get('nom').errors.minlength">
+              Un nom doit etre composé au minimum de 2 lettres
+           </span>
+           <span class="red-text"  *ngIf="userForm.get('nom').errors.pattern">
+              Ce champs ne doit pas contenir des caracteres speciaux
+          </span>
+        </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">person</i>
+          <input type="text" id="prenom" class="white-text text-darken-2" formControlName="prenom">
+          <label for="prenom" class="grey-text text-darken-3"><span class="red-text">*</span>Prenom</label>
+          <span *ngIf="userForm.get('prenom').errors && (userForm.get('prenom').touched || userForm.get('prenom').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('prenom').errors.required">
+                   Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('prenom').errors.minlength">
+                   Un nom doit etre composé au minimum de 2 lettres
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('prenom').errors.pattern">
+                   Ce champs ne doit pas contenir des caracteres speciaux
+               </span>
+             </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">email</i>
+          <input type="text" id="email" class="white-text text-darken-2" formControlName="email">
+          <label for="email"  class="grey-text text-darken-3"><span class="red-text">*</span>Email</label>
+          <span *ngIf="userForm.get('email').errors && (userForm.get('email').touched || userForm.get('email').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('email').errors.required || validiterForm==true">Ce champs est obligatoire</span>
+                <span class="red-text"  *ngIf="userForm.get('email').errors.pattern">
+                    Adresse émail invalide!
+               </span>
+                </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">login</i>
+          <input type="text" id="login" class="white-text text-darken-2" formControlName="login">
+          <label for="email" class="grey-text text-darken-3"><span class="red-text">*</span>Login</label>
+          <span *ngIf="userForm.get('login').errors && (userForm.get('login').touched || userForm.get('login').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('login').errors.required">
+                   Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('login').errors.minlength">
+                   Un nom doit etre composé au minimum de 8 caracteres
+                </span>
+             </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">lock</i>
+          <input type="text" id="pwd" class="grey-text text-darken-3" formControlName="pwd">
+          <label for="motDepasse" class="grey-text text-darken-3"><span class="red-text">*</span>Mot de passe</label>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">lock</i>
+          <input type="text" id="confirmpwd" class="grey-text text-darken-3" formControlName="confirmpwd">
+          <label for="email" class="grey-text text-darken-3"><span class="red-text">*</span>Confirmer le mot de passe</label>
+        </div>
+      </div>
+      <div class="" *ngIf="step == 2">
+        <i class="material-icons grey-text text-darken-3">people</i>
+        <select formControlName="sm" name="sm" id="Sm" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
+          <option value="" disabled selected>Choix de la situation matrimoniale</option>
+          <option value="Marié">Marié</option>
+          <option value="Célibataire">Célibataire</option>
+        </select>
+        <span *ngIf="userForm.get('sm').errors && (userForm.get('sm').touched || userForm.get('sm').dirty)">
+               <span class="red-text"  *ngIf="userForm.get('sm').errors.required">
+                  Ce champs est obligatoire
+               </span>
+            </span>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">paid</i>
+          <input type="text" id="salaire" class="" formControlName="salaire">
+          <label for="salaire" class="grey-text text-darken-3"><span class="red-text">*</span>Salaire</label>
+          <span *ngIf="userForm.get('salaire').errors && (userForm.get('salaire').touched || userForm.get('salaire').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('salaire').errors.required">
+                    Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('salaire').errors.minlength">
+                    Le salaire doit etre composé au minimum 2 chiffre
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('salaire').errors.pattern">
+                    Ce champs ne doit contenir que des chiffres
+                </span>
+                </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">lock</i>
+          <input type="text" id="salaire" class="" formControlName="CNI">
+          <label for="salaire" class="grey-text text-darken-3"><span class="red-text">*</span>CNI</label>
+          <span *ngIf="userForm.get('CNI').errors && (userForm.get('CNI').touched || userForm.get('CNI').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('CNI').errors.required">
+                    Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('CNI').errors.minlength">
+                    La CNI doit etre composé au minimum  13 chiffres
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('CNI').errors.maxlength">
+                    La CNI doit etre composé au maximum 13 chiffres
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('CNI').errors.pattern">
+                    Ce champs ne doit  contenir que  des chiffres
+                </span>
+                </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">people</i>
+          <input type="text" id="nb_enfant" class="" formControlName="nb_enfant">
+          <label for="nb_enfant" class="grey-text text-darken-3"><span class="red-text">*</span>Enfants</label>
+          <span *ngIf="userForm.get('nb_enfant').errors && (userForm.get('nb_enfant').touched || userForm.get('nb_enfant').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.required">
+                    Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.min">
+                    Ce champs doit etre  au minimum  0
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.pattern">
+                    Ce champs ne doit  contenir que  des chiffres
+                </span>
+                </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">people</i>
+          <input type="text" id="nb_femme" class="" formControlName="nb_femme">
+          <label for="nb_femme" class="grey-text text-darken-3"><span class="red-text">*</span>Femme(s)</label>
+          <span *ngIf="userForm.get('nb_femme').errors && (userForm.get('nb_femme').touched || userForm.get('nb_femme').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.required">
+                    Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.min">
+                    Ce champs doit etre  au minimum  0
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.pattern">
+                    Ce champs ne doit  contenir que  des chiffres
+                </span>
+                </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">phone</i>
+          <input type="text" id="salaire" class="" formControlName="telephone">
+          <label for="telephone" class="grey-text text-darken-3"><span class="red-text">*</span>Telephone</label>
+          <span *ngIf="userForm.get('telephone').errors && (userForm.get('telephone').touched || userForm.get('telephone').dirty)">
+                <span class="red-text"  *ngIf="userForm.get('telephone').errors.required">
+                    Ce champs est obligatoire
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('telephone').errors.minlength">
+                    Le numéro telephonedoit etre composé au minimum  9 chiffres
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('telephone').errors.maxlength">
+                    Le numéro telephone doit etre composé au maximum 9 chiffres
+                </span>
+                <span class="red-text"  *ngIf="userForm.get('telephone').errors.pattern">
+                    Ce champs ne doit  contenir que  des chiffres
+                </span>
+                </span>
+        </div>
+      </div>
+      <div  *ngIf="step == 3">
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">date_range</i>
+          <input type="text" id="date_embauche" class="pickadate grey-text text-darken-3" formControlName="date_embauche">
+          <label for="date_embauche" class="grey-text text-darken-3"><span class="red-text">*</span>Date d'embauche</label>
+          <span *ngIf="userForm.get('date_embauche').errors && (userForm.get('date_embauche').touched || userForm.get('date_embauche').dirty)">
+                        <span class="red-text"  *ngIf="userForm.get('date_embauche').errors.required">
+                        Ce champs est obligatoire
+                        </span>
+                    </span>
+        </div>
+        <div class="input-field col l6">
+          <i class="material-icons prefix grey-text text-darken-3">date_range</i>
+          <input type="text" id="date_fin" class="pickadate grey-text text-darken-3" formControlName="date_fin">
+          <label for="date_fin" class="grey-text text-darken-3"><span class="red-text">*</span>Date de fin contrat</label>
+          <span *ngIf="userForm.get('date_fin').errors && (userForm.get('date_fin').touched || userForm.get('date_fin').dirty)">
+                        <span class="red-text"  *ngIf="userForm.get('date_fin').errors.required">
+                        Ce champs est obligatoire
+                        </span>
+                    </span>
+        </div>
+        <i class="material-icons grey-text text-darken-3">people</i>
+        <select formControlName="sexe" name="sexe" id="sexe" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
+          <option value="" disabled selected>Sexe</option>
+          <option value="Masculin">Masculin</option>
+          <option value="Féminin">Féminin</option>
+        </select>
+        <span *ngIf="userForm.get('sexe').errors && (userForm.get('sexe').touched || userForm.get('sexe').dirty)">
+                    <span class="red-text"  *ngIf="userForm.get('sexe').errors.required">
+                        Ce champs est obligatoire
+                    </span>
+                 </span>
+        <i class="material-icons grey-text text-darken-3">people</i>
+        <select formControlName="type_contrat" name="type_contrat" id="type_contrat" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
+          <option value="" disabled selected>TYPE DE CONTRAT</option>
+          <option value="STAGE">STAGE</option>
+          <option value="CDD">CDD</option>
+          <option value="CDI">CDI</option>
+        </select>
+        <span *ngIf="userForm.get('type_contrat').errors && (userForm.get('type_contrat').touched || userForm.get('type_contrat').dirty)">
+                    <span class="red-text"  *ngIf="userForm.get('type_contrat').errors.required">
+                        Ce champs est obligatoire
+                    </span>
+                 </span>
+        <i class="material-icons grey-text text-darken-3">home</i>
+        <select formControlName="departement" name="departement" id="departement" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
+          <option value="" disabled selected>DEPARTEMENT</option>
+          <option value="RH">RH</option>
+          <option value="COMPTABILITE">COMPTABILITE</option>
+          <option value="C.GESTION">C.GESTION</option>
+          <option value="T.LOGISTIQUE">TRANSPORT LOGISTIQUE</option>
+        </select>
+        <span *ngIf="userForm.get('type_contrat').errors && (userForm.get('type_contrat').touched || userForm.get('type_contrat').dirty)">
+                    <span class="red-text"  *ngIf="userForm.get('type_contrat').errors.required">
+                        Ce champs est obligatoire
+                    </span>
+                 </span>
+      </div>
+      <div class="center" style="margin-top: 5px;">
+        <button  (click)="onPrevious()" type="button" *ngIf="step != 1" class="btn green darken-4  waves-effect waves-light" style="border-radius: 100px;">
+          PRECEDENT
+        </button>
+        <button (click)="onNext()" type="submit" *ngIf="step < 3" class="btn yellow darken-4  waves-effect waves-light" style="border-radius:100px;margin-left:10px;">
+          SUIVANT
+        </button>
+        <button type="submit" *ngIf="step == 3" class="btn green darken-4 waves-effect waves-light pulse"  style="border-radius:100px;margin-left:10px;">
+          VALIDER
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

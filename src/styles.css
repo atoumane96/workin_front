@@ -1,0 +1,37 @@
+@import "~material-icons/iconfont/material-icons.css";
+@import '~font-awesome/css/font-awesome.css';
+/* You can add global styles to this file, and also import other style files */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(13, 13, 14) rgb(255, 255, 255);
+  border-radius: 1px rgb(174, 175, 175);
+}
+/*  scrollbar  pour les autres navigateurs */
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(220, 228, 228);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(40, 42, 43);
+  border-radius: 20px;
+  border: 1px solid rgb(197, 206, 206);
+}
+
+#loading {
+  position: absolute;
+  top: 40%;
+  left: 47%;
+}
+
+footer {
+  background: rgb(6,6,6);
+  background: linear-gradient(90deg, rgba(6,6,6,1) 4%, rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);
+  position:absolute;
+  bottom:0;
+  width: 100%;
+}

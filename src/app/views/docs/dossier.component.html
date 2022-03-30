@@ -1,0 +1,31 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <ul class="breadcrumbs">
+    <li><a routerLink="/archive" class="white-text">Type archive</a></li>
+    <li><a href="/dossier?type={{ nom }}">{{ nom | lowercase}}</a></li>
+  </ul>
+</div>
+
+<!-- section des statistiques -->
+<div class="container section">
+
+  <div class="row">
+    <a routerLink="/nature"
+       [queryParams]="{ dossier: dossier.nomDossier,typeArchive: dossier.typeArchive.libelleTypeArchive }"
+       class="col s2 tab card-panel transparent hoverable center-align"
+       *ngFor="let dossier of listeDossier let i = index">
+      <img src="../assets/icone_file/dossier.png" alt="aezr"/>
+      <h5 id="Tab" class="grey-text text-darken-4 active"
+          style="font-weight:bold;border-radius:100px">{{ dossier.nomDossier }}</h5>
+    </a>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a data-target="modalCat" class="btn-floating btn-large grey darken-3 modal-trigger pulse">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+
+</div>
+
+<!--Nos utilisateurs -------------------------------------------------------------------->

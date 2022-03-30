@@ -1,0 +1,196 @@
+<!--<app-navbar></app-navbar>-->
+<!--<div class="row">-->
+<!--  <div class="col s12 m7 offset-m3">-->
+<!--    <div class="card #90a4ae blue-grey lighten-">-->
+<!--      <div class="card-content white-text">-->
+<!--        <span class="card-title">Création d'un utilisateur</span>-->
+<!--        <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()">-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">account_circle</i>-->
+<!--              <label for="prenom" class=" white-text">Nom</label>-->
+<!--              <input type="text" id="nom" formControlName="nom">-->
+<!--            </div>-->
+<!--            <div class="input-field col s5">-->
+<!--              <i class="material-icons prefix">account_circle</i>-->
+<!--              <input class="white-text" type="text" id="prenom" formControlName="prenom">-->
+<!--              <label for="prenom" class="white-text">Prenom</label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">email</i>-->
+<!--              <label for="email" class="validate white-text">Adresse e-mail</label>-->
+<!--              <input type="text" id="email" formControlName="email">-->
+<!--            </div>-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">phone</i>-->
+<!--              <label for="tel"class="white-text">Telephone</label>-->
+<!--              <input type="text" id="tel" formControlName="tel">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">date_range</i>-->
+<!--              <label for="dateembauche" class=" white-text">Date Embauche</label>-->
+<!--              <input type="text" class="datepicker" id="dateembauche" formControlName="dateembauche">-->
+<!--            </div>-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">date_range</i>-->
+<!--              <label for="datenaissance" class=" white-text">Date De Naissance</label>-->
+<!--              <input type="text" class="datepicker" id="datenaissance" formControlName="datenaissance">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <i class="material-icons prefix">key</i>-->
+<!--              <label for="pwd"class="validate white-text">Mot de passe</label>-->
+<!--              <input type="password" id="pwd" formControlName="pwd">-->
+<!--            </div>-->
+<!--            <div class="input-field col s5">-->
+<!--              <i class="material-icons prefix">key</i>-->
+<!--              <label for="confirmpwd"  class="white-text">Confirmer le mot de passe</label>-->
+<!--              <input type="password" id="confirmpwd" formControlName="confirmpwd">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s3 offset-s1">-->
+<!--              <select formControlName="sm" id="sm">-->
+<!--                <option value="" disabled selected>Veuiller choisir</option>-->
+<!--                <option value="Marié">Marié</option>-->
+<!--                <option value="Célibataire">Célibataire</option>-->
+<!--              </select>-->
+<!--              <label for="sm" class="white-text">Situation matrimoniale</label>-->
+<!--            </div>-->
+<!--            <div class="input-field col s3">-->
+<!--              <label for="cni" class="white-text">CNI</label>-->
+<!--              <input type="number" id="cni" formControlName="cni">-->
+<!--            </div>-->
+<!--            <div class="input-field col s2 white-text">-->
+<!--              <select formControlName="sexe" id="sexe">-->
+<!--                <option value="" disabled selected>Veuiller choisir</option>-->
+<!--                <option value="homme">Homme</option>-->
+<!--                <option value="femme">Femme</option>-->
+<!--              </select>-->
+<!--              <label for="sexe" class="white-text">Sexe</label>-->
+<!--            </div>-->
+<!--            <div class="input-field col s2">-->
+<!--              <select formControlName="etat" id="etat">-->
+<!--                <option value="" disabled selected>Veuiller choisir</option>-->
+<!--                <option value="1">Actif</option>-->
+<!--                <option value="0">Inactif</option>-->
+<!--              </select>-->
+<!--              <label for="etat" class="black-text">Etat du compte</label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s2 offset-s1">-->
+<!--              <label for="salaire" class="black-text">Salaire</label>-->
+<!--              <input type="number" id="salaire" formControlName="salaire">-->
+<!--            </div>-->
+<!--            <div class="input-field col s3">-->
+<!--              <label for="nb_femme" class="black-text">Nombre de femme</label>-->
+<!--              <input type="number" id="nb_femme" formControlName="nb_femme">-->
+<!--            </div>-->
+<!--            <div class="input-field col s3">-->
+<!--              <label for="nb_enfant" class="black-text">Nombre d'enfant</label>-->
+<!--              <input type="number" id="nb_enfant" formControlName="nb_enfant">-->
+<!--            </div>-->
+<!--            <div class="input-field col s2">-->
+<!--              <select formControlName="sm">-->
+<!--                <option value="" disabled selected>Veuiller choisir</option>-->
+<!--                <ng-container *ngIf="departement$| async as result" [ngSwitch]="result.dataState" >-->
+<!--                  <ng-container *ngSwitchCase="DataStateEnum.LOADING">-->
+<!--                    <h1>LOADING...</h1>-->
+<!--                  </ng-container>-->
+<!--                  <ng-container *ngSwitchCase="DataStateEnum.LOADED">-->
+<!--                    <option *ngFor="let d of result.data" value="{{d.nomDepartement}}">{{d.nomDepartement}}</option>-->
+<!--                  </ng-container>-->
+<!--                </ng-container>-->
+<!--              </select>-->
+<!--              <label class="white-text">Departement</label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="row">-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <label for="adresse" class="white-text">Adresse</label>-->
+<!--              <input type="text" id="adresse" formControlName="adresse">-->
+<!--            </div>-->
+<!--            <div class="input-field col s5 offset-s1">-->
+<!--              <label for="matricule" class="white-text">Matricule</label>-->
+<!--              <input type="text" id="matricule" formControlName="matricule">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="center">-->
+<!--            <button type="submit" class="btn btn-large-->
+<!--                    green darken-4 waves-effect waves-light">Ajouter</button>-->
+<!--          </div>-->
+
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+
+
+
+
+
+<app-navbar></app-navbar>
+<ng-container *ngIf="utilisateurs$| async as result" [ngSwitch]="result.dataState" >
+  <ng-container *ngSwitchCase="DataStateEnum.LOADING">
+    <div class="container center">
+      <h1>LOADING...</h1>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+    <table class="highlight table striped responsive-table">
+      <thead class="black-text center">
+      <th>Code</th>
+      <th>Nom</th>
+      <th>Prenom</th>
+      <th>Adresse</th>
+      <th>Telephone</th>
+      <th>sexe</th>
+      <th>cin</th>
+      <th>salaire</th>
+      <th>departement</th>
+      <th>situationMatri</th>
+      <th>nombreEnfant</th>
+      <th>dateEmbauche</th>
+      <th>dateDeNaissance</th>
+      <th>Actions</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let u of result.data" class="card transparent hoverable grey-text text-lighten-1" style="font-weight: bold;">
+        <td>{{u.id}} </td>
+        <td>{{u.nom}} </td>
+        <td>{{u.prenom}} </td>
+        <td>{{u.adresse}} </td>
+        <td>{{u.telephone}} </td>
+        <td>{{u.sexe}} </td>
+        <td>{{u.cin}} </td>
+        <td>{{u.salaire}} </td>
+        <td>{{u.departement}} </td>
+        <td>{{u.situationMatri}} </td>
+        <td>{{u.nombreEnfant}} </td>
+        <td>{{u.nombreFemme}} </td>
+        <td>{{u.dateEmbauche}} </td>
+        <td>{{u.dateDeNaissance}} </td>
+        <td id="man">
+          <a  href="" id="bloquer"class="btn btn-floating transparent">
+            <i class="material-icons green-text">lock</i>
+          </a>
+          <a href="" id="delete" class="btn btn-floating transparent">
+            <i class="material-icons red-text">delete</i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-container *ngSwitchCase="DataStateEnum.ERROR">
+    <h1 class="center red-text">{{result.errorMessage}}</h1>
+  </ng-container>
+</ng-container>

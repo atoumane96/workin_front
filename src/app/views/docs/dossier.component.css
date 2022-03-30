@@ -1,0 +1,14 @@
+@import "../../breadcumb.css";
+
+.nav {
+  height: 100px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  height: 40%;
+}
+.card {
+  position: absolute;
+  top: 28%;
+  left: 15%;
+  width: 70%;
+}

@@ -1,0 +1,13 @@
+.TabIndex a{
+  color: #0f9d58;
+}
+
+.TabIndex ul li .active{
+  background-color: #0f9d58;
+  color: white;
+}
+
+.TabIndex a:hover{
+  background-color: #0f9d58;
+  color: white;
+}

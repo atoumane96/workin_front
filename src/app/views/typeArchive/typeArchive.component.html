@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <ul class="breadcrumbs">
+    <li><a routerLink="/archive">Type archive</a></li>
+  </ul>
+</div>
+
+<!-- section des statistiques -->
+<div class="container section">
+
+  <div class="row">
+    <a routerLink="/dossier" [queryParams]="{ type: tpArchive.libelleTypeArchive}"
+       class="col s3 tab card-panel transparent hoverable center-align"
+       *ngFor="let tpArchive of listTypeArchive let i = index">
+      <img src="../assets/icone_file/folder.png"/>
+      <p id="Tab" class="grey-text text-darken-4 active"
+         style="font-weight:bold;border-radius:100px">{{ tpArchive.libelleTypeArchive }}</p>
+    </a>
+  </div>
+
+  <!--
+    section pour le chargement -->
+
+  <div class="fixed-action-btn">
+    <a routerLink="/archiver" class="btn-floating btn-large grey darken-3  pulse">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+
+</div>
