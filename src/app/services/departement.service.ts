@@ -14,14 +14,17 @@ export class DepartementService {
 
     ressource="/departement";
     departementLocal$: Observable<AppDataState<Departement[]>> | null = null;
+
+
     constructor(private http:HttpClient) {
       this.getDepartementsLocal();
     }
-    
+
+
     public getAllDepartement():Observable<Departement[]>{
-      let url=environment.host+this.ressource;
-      return this.http.get<Departement[]>(url);   
+      return this.http.get<Departement[]>(environment.host + this.ressource + "/all");
     }
+
     getDepartementsLocal(){
       this.departementLocal$ = this.getAllDepartement().pipe(
         map(
@@ -31,16 +34,17 @@ export class DepartementService {
         startWith({ dataState: DataStateEnum.LOADING } as AppDataState<Departement[]>),
         catchError(err =>
           of({
-            dataState: DataStateEnum.ERROR, errorMessage: err.message
+            dataState: DataStateEnum.ERROR,
+            errorMessage: err.message
           } as AppDataState<Departement[]>)));
     }
 
     public ajouterDepartement(departement: Departement):Observable<Departement>{
-      return this.http.post<Departement>(environment.host+this.ressource,departement);
+      return this.http.post<Departement>(environment.host+this.ressource+"/create",departement);
     }
 
     public modifierDepartement(id: number, departement: Departement):Observable<Departement>{
-      return this.http.put<Departement>(`${environment.host+this.ressource}/${id}`,departement);    
+      return this.http.put<Departement>(`${environment.host+this.ressource}/${id}`,departement);
     }
 
     public supprimerDepartement(id: number):Observable<any>{

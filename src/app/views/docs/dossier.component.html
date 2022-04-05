@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <ul class="breadcrumbs">
     <li><a routerLink="/archive" class="white-text">Type archive</a></li>
-    <li><a href="/dossier?type={{ nom }}">{{ nom | lowercase}}</a></li>
+    <li><a href="/dossier?type={{ nom }}" class="green-text">{{ nom | lowercase}}</a></li>
   </ul>
 </div>
 
@@ -14,7 +14,7 @@
        [queryParams]="{ dossier: dossier.nomDossier,typeArchive: dossier.typeArchive.libelleTypeArchive }"
        class="col s2 tab card-panel transparent hoverable center-align"
        *ngFor="let dossier of listeDossier let i = index">
-      <img src="../assets/icone_file/dossier.png" alt="aezr"/>
+      <img src="../assets/icone_file/calendrier.png" alt="aezr"/>
       <h5 id="Tab" class="grey-text text-darken-4 active"
           style="font-weight:bold;border-radius:100px">{{ dossier.nomDossier }}</h5>
     </a>

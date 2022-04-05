@@ -1,24 +1,24 @@
 import { Departement } from "./Departement.model";
 
 export interface Utilisateur{
-    id: Number;
-    nom: String;
-    prenom: String;
+    id: number;
+    nom: string;
+    prenom: string;
     dateDeNaissance: Date;
-    sexe: String;
-    telephone: String;
-    matricule: String;
-    photo: String;
-    cin: String;
-    salaire: Number;
+    sexe: string;
+    telephone: string;
+    matricule: string;
+    photo: string;
+    cin: string;
+    salaire: number;
     dateEmbauche: Date;
-    situationMatri: String;
-    nombreEnfant: Number;
-    nombreFemme: Number;
-    motDePasse: String;
-    adresse: String;
-    email: String;
+    situationMatri: string;
+    nombreEnfant: number;
+    nombreFemme: number;
+    motDePasse: string;
+    adresse: string;
+    email: string;
     departement: Departement;
-    etat: Boolean;
+    etat: boolean;
 
 }

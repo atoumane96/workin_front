@@ -14,6 +14,10 @@ import {TypeArchiveComponent} from "./views/typeArchive/typeArchive.component";
 import {ArchiveformulaireComponent} from "./views/archiveformulaire/archiveformulaire.component";
 import {NatureComponent} from "./views/nature/nature.component";
 import {UtilisateurformulaireComponent} from "./views/utilisateurformulaire/utilisateurformulaire.component";
+import {FichierComponent} from "./views/fichier/fichier.component";
+import {DepartementComponent} from "./views/departement/departement.component";
+import {UtilisateurDetailsComponent} from "./views/utilisateur-details/utilisateur-details.component";
+import {ContratsComponent} from "./views/contrats/contrats.component";
 
 
 const routes: Routes = [
@@ -32,6 +36,16 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'contrat',
+    component:ContratsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'details',
+    component:UtilisateurDetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path:'nature',
     component:NatureComponent,
     canActivate: [AuthGuard]
@@ -41,11 +55,11 @@ const routes: Routes = [
     component:ArchiveformulaireComponent,
     canActivate: [AuthGuard]
   },
-  // {
-  //   path:'fichier',
-  //   component:FichierComponent,
-  //   canActivate: [AuthGuard]
-  // },
+  {
+    path:'fichier',
+    component:FichierComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path:'dashboard',
     component:NdashioComponent,

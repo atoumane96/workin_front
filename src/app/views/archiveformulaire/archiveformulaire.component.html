@@ -1,11 +1,15 @@
 <app-navbar></app-navbar>
 
 <div class="row">
-  <div class="col s8 white z-depth-2" style="margin-left: 250px;margin-bottom: 20px;margin-top: 20px;">
-    <h5 class="center-align black-text">ARCHIVAGE</h5>
+  <div class="col s8 white z-depth-2" id="barreArchive">
+    <h5 class=" white-text center-align">
+      <i class="fa fa-file-pdf-o"></i>
+      <i class="fa fa-file-excel-o"></i>
+      <i class="fa fa-file-word-o"></i>
+           ARCHIVAGE</h5>
   </div>
   <form action="" [formGroup]="this.archiveService.dataForm" (ngSubmit)="addArchive()" enctype="multipart/form-data">
-    <div class="col s8 z-depth-1 white" style="margin-left: 250px">
+    <div class="col s8 z-depth-1 white" style="margin-left: 250px;border: 5px solid #0b2e13">
       <div class="row">
         <div class="col s4">
           <div class="col-4">
@@ -14,6 +18,7 @@
               <div style="margin-left: 100px">
                 <img [src]="fileURL" style="width: 160px;height: 160px">
               </div>
+              <p class="control-label green-text"><i class="fa fa-file-archive-o "></i>  {{nomFichier}}</p>
             </div>
             <div class="form-group" style="margin-bottom: 20px">
               <div class="preview-zone hidden">
@@ -37,17 +42,17 @@
         <div class="col s7 right">
           <div class="row">
             <div class="input-field col s12">
-              <input id="icon_prefix" type="text" class="validate" formControlName="nomFichier">
+              <input id="icon_prefix" type="text" class="validate" formControlName="nomFichier" [attr.disabled]="!activeNomFcihier ? true : null" (change)="activeTypeFichier = true">
               <label for="icon_prefix">Nom du fichier</label>
             </div>
           </div>
 
           <div class="row">
             <div class="input-field col s12">
-              <select class="select browser-default" (change)="loadListeTypeDossier($event)">
+              <select class="select browser-default" (change)="loadListeTypeDossier($event)" [attr.disabled]="!activeTypeFichier ? true : null">
                 <option value="" disabled selected>Type de fichier</option>
                 <option data-icon="images/sample-1.jpg" class="left"
-                        *ngFor="let type of listeTypeArchive let i=index">{{ type.libelleTypeArchive }} </option>
+                        *ngFor="let type of listeTypeArchive">{{ type.libelleTypeArchive }} </option>
               </select>
 
             </div>
@@ -55,19 +60,19 @@
 
           <div class="row">
             <div class="input-field col s12">
-              <select class="browser-default" formControlName="dossier" (change)="loadListeDossier($event)">
+              <select class="browser-default" formControlName="dossier" (change)="loadListeDossier($event)" [attr.disabled]="!activeEmplacement ? true : null">
                 <option value="" disabled selected>Choisir un emplacement</option>
                 <option *ngFor="let doss of listeDossier">{{ doss.nomDossier }}</option>
                 <option>Autre</option>
               </select>
-              <a *ngIf="optionEmplacement" data-target="modalEmplacement" class="btn btn-small modal-trigger"><i
-                class="material-icons left">add</i>emplcement</a>
+              <a *ngIf="optionEmplacement" data-target="modalEmplacement" class="btn btn-small modal-trigger">
+                <i class="material-icons left">add</i>emplacement</a>
             </div>
           </div>
 
           <div class="row">
-            <div class="input-field col s12">
-              <select class="browser-default" formControlName="nature" (change)="loadListeNature($event)">
+            <div class="input-field col s12" disabled>
+              <select class="browser-default" formControlName="nature" (change)="loadListeNature($event)" [attr.disabled]="!activeNatureFichier ? true : null">
                 <option value="" disabled selected>Nature du fichier</option>
                 <option data-icon="images/sample-1.jpg" class="left"
                         *ngFor="let nature of listeNature"> {{ nature.libelleNature }}</option>
@@ -80,8 +85,14 @@
 
         </div>
         <div class="col s12">
-          <button class="btn waves-green waves-light right" type="submit" name="action"
-                  style="border-radius: 100px;">Enregistrer
+          <button class="btn waves-green waves-light right"
+                  type="submit"
+                  name="action"
+                  [attr.disabled]="!activeButtonValidation ? true : null"
+                  style="border-radius: 100px;
+                  background: rgb(6,6,6);
+                  background: linear-gradient(90deg, rgba(6,6,6,1) 4%,
+                  rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);">Enregistrer
             <i class="material-icons left">save</i>
           </button>
 
@@ -96,13 +107,13 @@
   <div class="modal-header green darken-4">
     <div class="btn btn-floating tooltipped transparent right modal-close" data-position="bottom" data-tooltip="FERME">
       <i class="material-icons  white-text">close</i></div>
-    <h5 class="white-text" style="font-family:serif;font-weight: bold;">Ajoutez un département</h5>
+    <h5 class="white-text" style="font-family:serif;font-weight: bold;">Ajoutez la nature du fichier</h5>
   </div>
   <div class="modal-content">
     <form #fr="ngForm" id="formulaire" (ngSubmit)="addNature(fr.value)">
       <div class="input-field" style="font-weight: bold;">
         <i class="material-icons prefix grey-text text-darken-3">home</i>
-        <input ngModel type="text" name="libelleNature" id="nature">
+        <input ngModel type="text" name="libelleNature" id="nature" required>
         <label for="nature" class="grey-text text-darken-3">Nature</label>
       </div>
       <div class="modal-footer transparent">
@@ -110,8 +121,13 @@
           <button type="reset" class="btn red darken-4 white-text hoverable" style="border-radius: 100px;">
             <i class="material-icons left">cancel</i>ANNULER
           </button>
-          <button type="submit" class="btn green darken-4 white-text hoverable"
-                  style="border-radius: 100px;margin-left: 20px;">
+          <button type="submit" class="btn green darken-4 white-text hoverable modal-close"
+                   onclick="M.toast({html:'Nature ajouté avec succes'})"
+                   style="border-radius: 100px;
+                   margin-left: 20px;
+                   background: rgb(6,6,6);
+                   background: linear-gradient(90deg, rgba(6,6,6,1) 4%,
+                   rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);">
             <i class="material-icons left">save</i>ENREGISTRER
           </button>
         </div>
@@ -139,7 +155,8 @@
           <button type="reset" class="btn red darken-4 white-text hoverable" style="border-radius: 100px;">
             <i class="material-icons left">cancel</i>ANNULER
           </button>
-          <button type="submit" class="btn green darken-4 white-text hoverable"
+          <button type="submit" class="btn green darken-4 white-text hoverable modal-close"
+                  onclick="M.toast({html:'Emplacement ajouté avec succes'})"
                   style="border-radius: 100px;margin-left: 20px;">
             <i class="material-icons left">save</i>ENREGISTRER
           </button>

@@ -15,11 +15,25 @@ export class UtilisateurService {
     }
 
     public getAllUsers():Observable<Utilisateur[]>{
-      let host= environment.host;
-      let data=this.http.get<any>(`\${this.host}+this.ressource/all`);
-      console.log(data)
-      return this.http.get<Utilisateur[]>(`${environment.host+this.ressource+"/all"}`);
+      // let host= environment.host;
+      // let data=this.http.get<any>(`\${this.host}+this.ressource/all`);
+      // console.log(data)
+      return this.http.get<Utilisateur[]>(environment.host + this.ressource + "/all");
     }
+
+  public bloquer(email:string):Observable<Utilisateur>{
+    // let host= environment.host;
+    // let data=this.http.get<any>(`\${this.host}+this.ressource/all`);
+    // console.log(data)
+    return this.http.get<Utilisateur>(environment.host + this.ressource + "/bloquer/" + email);
+  }
+
+  public debloquer(email:string):Observable<Utilisateur>{
+    // let host= environment.host;
+    // let data=this.http.get<any>(`\${this.host}+this.ressource/all`);
+    // console.log(data)
+    return this.http.get<Utilisateur>(environment.host + this.ressource + "/debloquer/" + email);
+  }
 
 
   public getAllUserByEmail(email:string):Observable<Utilisateur>{
@@ -30,8 +44,8 @@ export class UtilisateurService {
 
 
 
-    public ajouterUtilisateur(utilisateur: Utilisateur):Observable<Utilisateur>{
-      return this.http.post<Utilisateur>(environment.host+this.ressource,utilisateur);
+    public ajouterUtilisateur(dataForm: FormData):Observable<FormData>{
+      return this.http.post<FormData>(environment.host + this.ressource + "/create",dataForm);
     }
 
     public ModifierUtilisateur(id: number, utilisateur: Utilisateur):Observable<Utilisateur>{

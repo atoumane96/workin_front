@@ -1,243 +1,157 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <div class="card-panel grey lighten-2" style="border-radius: 20px;">
-    <div class="modal-header green darken-4">
-      <h5 class="white-text center-align" style="font-family:serif;font-weight: bold;">Ajoutez un employé</h5>
-    </div>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()">
+  <div class="card-panel" style="border-radius: 20px;">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" enctype="multipart/form-data">
       <div *ngIf="step == 1">
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">person</i>
-          <input type="text" id="nom" class="" formControlName="nom">
-          <label for="nom" class="grey-text text-darken-3"><span class="red-text">*</span>Nom</label>
-          <span *ngIf="userForm.get('nom').errors && (userForm.get('nom').touched || userForm.get('nom').dirty)">
-           <span class="red-text"  *ngIf="userForm.get('nom').errors.required">
-              Ce champs est obligatoire
-           </span>
-           <span class="red-text"  *ngIf="userForm.get('nom').errors.minlength">
-              Un nom doit etre composé au minimum de 2 lettres
-           </span>
-           <span class="red-text"  *ngIf="userForm.get('nom').errors.pattern">
-              Ce champs ne doit pas contenir des caracteres speciaux
-          </span>
-        </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">person</i>
-          <input type="text" id="prenom" class="white-text text-darken-2" formControlName="prenom">
-          <label for="prenom" class="grey-text text-darken-3"><span class="red-text">*</span>Prenom</label>
-          <span *ngIf="userForm.get('prenom').errors && (userForm.get('prenom').touched || userForm.get('prenom').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('prenom').errors.required">
-                   Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('prenom').errors.minlength">
-                   Un nom doit etre composé au minimum de 2 lettres
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('prenom').errors.pattern">
-                   Ce champs ne doit pas contenir des caracteres speciaux
-               </span>
-             </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">email</i>
-          <input type="text" id="email" class="white-text text-darken-2" formControlName="email">
-          <label for="email"  class="grey-text text-darken-3"><span class="red-text">*</span>Email</label>
-          <span *ngIf="userForm.get('email').errors && (userForm.get('email').touched || userForm.get('email').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('email').errors.required || validiterForm==true">Ce champs est obligatoire</span>
-                <span class="red-text"  *ngIf="userForm.get('email').errors.pattern">
-                    Adresse émail invalide!
-               </span>
-                </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">login</i>
-          <input type="text" id="login" class="white-text text-darken-2" formControlName="login">
-          <label for="email" class="grey-text text-darken-3"><span class="red-text">*</span>Login</label>
-          <span *ngIf="userForm.get('login').errors && (userForm.get('login').touched || userForm.get('login').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('login').errors.required">
-                   Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('login').errors.minlength">
-                   Un nom doit etre composé au minimum de 8 caracteres
-                </span>
-             </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">lock</i>
-          <input type="text" id="pwd" class="grey-text text-darken-3" formControlName="pwd">
-          <label for="motDepasse" class="grey-text text-darken-3"><span class="red-text">*</span>Mot de passe</label>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">lock</i>
-          <input type="text" id="confirmpwd" class="grey-text text-darken-3" formControlName="confirmpwd">
-          <label for="email" class="grey-text text-darken-3"><span class="red-text">*</span>Confirmer le mot de passe</label>
+        <h5>Information personnelles</h5>
+        <div class="row">
+           <div class="col blue-grey darken-4 s12" style="border-radius: 20px;">
+             <div class="input-field col l4">
+               <img [src]="imgURL" alt="kds" class="responsive-img "
+               style="width: 128px; height: 128px;"/>
+               <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+             </div>
+             <div class="input-field col l4">
+               <i class="material-icons prefix white-text">person</i>
+               <input type="text" id="nom" formControlName="nom" class="white-text" required>
+               <label for="nom" class=" white-text"><span class="red-text">*</span>Nom</label>
+             </div>
+             <div class="input-field col l4">
+               <i class="material-icons prefix white-text">person</i>
+               <input type="text" id="prenom" class="white-text" formControlName="prenom" required>
+               <label for="prenom" class="white-text"><span class="red-text">*</span>Prenom</label>
+             </div>
+             <div class="input-field col s6 center-align" >
+               <div class="col s3">
+                 <p class="white-text"><span class="red-text">*</span>Sexe</p>
+                   <div>
+                     <label>
+                       <input value="M" formControlName="sexe" type="radio" [attr.checked]="true" (change)="activeNombreFemme=true"/>
+                       <span class="white-text">Homme</span>
+                     </label>
+                   </div>
+                   <div style="margin-top: 15px">
+                     <label>
+                       <input value="F" formControlName="sexe" type="radio" (change)="activeNombreFemme=null" />
+                       <span class="white-text">Femme</span>
+                     </label>
+                   </div>
+               </div>
+               <div class="col s9">
+                 <p class="white-text right-align" ><span class="red-text">*</span>Situation Matrimoniale</p>
+                   <div class="right-align">
+                     <label>
+                       <input value="C" formControlName="situationMatri" type="radio" checked />
+                       <span class="white-text">Célibatire</span>
+                     </label>
+                   </div>
+                   <div class=" right-align" style="margin-top: 15px">
+                     <label>
+                       <input  value="M" formControlName="situationMatri" type="radio" />
+                       <span class="white-text">Marié(e)</span>
+                     </label>
+                   </div>
+               </div>
+             </div>
+             <div class="input-field col l6" style="margin-top: 30px;">
+               <i class="material-icons prefix white-text">email</i>
+               <input type="text" id="email" class="white-text " formControlName="email">
+               <label for="email"  class="white-text"><span class="red-text">*</span>Email</label>
+             </div>
+             <div class="input-field col l6" style="margin-top: 30px;">
+               <i class="material-icons prefix white-text">phone</i>
+               <input type="text" id="telephone" class="white-text" formControlName="telephone">
+               <label for="telephone" class="white-text"><span class="red-text">*</span>Telephone</label>
+             </div>
+             <div class="input-field col l6" style="margin-top: 30px;">
+               <i class="material-icons prefix white-text">people</i>
+               <input type="number" min="0" value="0" id="nb_enfant" class="white-text" formControlName="nombreEnfant">
+               <label for="nb_enfant" class="white-text"><span class="red-text">*</span>Enfants</label>
+             </div>
+             <div class="input-field col l6" style="margin-top: 30px;">
+               <i class="material-icons prefix white-text">people</i>
+               <input type="number" min="0" value="0" id="nb_femme" class="white-text" formControlName="nombreFemme" [attr.disabled]="!activeNombreFemme ? true : null">
+               <label for="nb_femme" class="white-text"><span class="red-text">*</span>Femme(s)</label>
+             </div >
+             <div class="input-field col s6" style="margin-top: 30px;">
+               <i class="material-icons prefix white-text">home</i>
+               <input type="text" id="adresse" class="white-text" formControlName="adresse">
+               <label for="adresse" class="white-text"><span class="red-text">*</span>Adresse</label>
+             </div>
+             <div class="input-field col s6" style="margin-top: 30px;">
+               <input type="date" id="detenaissance" class="white-text" formControlName="dateDeNaissance">
+               <label for="detenaissance" class="white-text"><span class="red-text">*</span>Date de naissance</label>
+             </div>
+             <div class="col s6" style="margin-bottom: 60px"></div>
+           </div>
         </div>
       </div>
       <div class="" *ngIf="step == 2">
-        <i class="material-icons grey-text text-darken-3">people</i>
-        <select formControlName="sm" name="sm" id="Sm" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
-          <option value="" disabled selected>Choix de la situation matrimoniale</option>
-          <option value="Marié">Marié</option>
-          <option value="Célibataire">Célibataire</option>
-        </select>
-        <span *ngIf="userForm.get('sm').errors && (userForm.get('sm').touched || userForm.get('sm').dirty)">
-               <span class="red-text"  *ngIf="userForm.get('sm').errors.required">
-                  Ce champs est obligatoire
-               </span>
-            </span>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">paid</i>
-          <input type="text" id="salaire" class="" formControlName="salaire">
-          <label for="salaire" class="grey-text text-darken-3"><span class="red-text">*</span>Salaire</label>
-          <span *ngIf="userForm.get('salaire').errors && (userForm.get('salaire').touched || userForm.get('salaire').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('salaire').errors.required">
-                    Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('salaire').errors.minlength">
-                    Le salaire doit etre composé au minimum 2 chiffre
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('salaire').errors.pattern">
-                    Ce champs ne doit contenir que des chiffres
-                </span>
-                </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">lock</i>
-          <input type="text" id="salaire" class="" formControlName="CNI">
-          <label for="salaire" class="grey-text text-darken-3"><span class="red-text">*</span>CNI</label>
-          <span *ngIf="userForm.get('CNI').errors && (userForm.get('CNI').touched || userForm.get('CNI').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('CNI').errors.required">
-                    Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('CNI').errors.minlength">
-                    La CNI doit etre composé au minimum  13 chiffres
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('CNI').errors.maxlength">
-                    La CNI doit etre composé au maximum 13 chiffres
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('CNI').errors.pattern">
-                    Ce champs ne doit  contenir que  des chiffres
-                </span>
-                </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">people</i>
-          <input type="text" id="nb_enfant" class="" formControlName="nb_enfant">
-          <label for="nb_enfant" class="grey-text text-darken-3"><span class="red-text">*</span>Enfants</label>
-          <span *ngIf="userForm.get('nb_enfant').errors && (userForm.get('nb_enfant').touched || userForm.get('nb_enfant').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.required">
-                    Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.min">
-                    Ce champs doit etre  au minimum  0
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('nb_enfant').errors.pattern">
-                    Ce champs ne doit  contenir que  des chiffres
-                </span>
-                </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">people</i>
-          <input type="text" id="nb_femme" class="" formControlName="nb_femme">
-          <label for="nb_femme" class="grey-text text-darken-3"><span class="red-text">*</span>Femme(s)</label>
-          <span *ngIf="userForm.get('nb_femme').errors && (userForm.get('nb_femme').touched || userForm.get('nb_femme').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.required">
-                    Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.min">
-                    Ce champs doit etre  au minimum  0
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('nb_femme').errors.pattern">
-                    Ce champs ne doit  contenir que  des chiffres
-                </span>
-                </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">phone</i>
-          <input type="text" id="salaire" class="" formControlName="telephone">
-          <label for="telephone" class="grey-text text-darken-3"><span class="red-text">*</span>Telephone</label>
-          <span *ngIf="userForm.get('telephone').errors && (userForm.get('telephone').touched || userForm.get('telephone').dirty)">
-                <span class="red-text"  *ngIf="userForm.get('telephone').errors.required">
-                    Ce champs est obligatoire
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('telephone').errors.minlength">
-                    Le numéro telephonedoit etre composé au minimum  9 chiffres
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('telephone').errors.maxlength">
-                    Le numéro telephone doit etre composé au maximum 9 chiffres
-                </span>
-                <span class="red-text"  *ngIf="userForm.get('telephone').errors.pattern">
-                    Ce champs ne doit  contenir que  des chiffres
-                </span>
-                </span>
+        <h5>Information personnelles</h5>
+        <div class="row">
+          <div class="col blue-grey darken-4 s12" style="border-radius: 20px;">
+            <div class="input-field col l6">
+              <i class="material-icons prefix white-text">code</i>
+              <input type="text" id="matricule" class="white-text" formControlName="matricule">
+              <label for="matricule" class="white-text"><span class="red-text">*</span>Matricule</label>
+            </div>
+            <div class="input-field col l6">
+              <i class="material-icons prefix white-text">paid</i>
+              <input type="number" min="0" id="salaire" value="0" class="white-text" formControlName="salaire">
+              <label for="salaire" class="white-text"><span class="red-text">*</span>Salaire</label>
+            </div>
+            <div class="input-field col l6" style="margin-top: 35px;">
+              <i class="material-icons prefix white-text">lock</i>
+              <input type="number" id="cni" class="" formControlName="cin">
+              <label for="cni" class="white-text"><span class="red-text">*</span>CNI</label>
+            </div>
+            <div class="input-field col l6" style="margin-top: 35px;">
+              <input type="date" id="date_embauche" class="white-text" formControlName="dateEmbauche">
+              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date d'embauche</label>
+            </div>
+            <div class="input-field col s8" style="margin-top: 20px;">
+              <p class="white-text" style="margin-left: 60px">
+                <span class="red-text">*</span>Type de contrat</p>
+             <div style="display: flex; flex-direction: row; justify-content: space-around">
+               <label *ngFor="let type of listeTypeContrat">
+                 <input  [value]="type" formControlName="typeDeContrat" (change)="type.libelleTypeContrat == 'CDI'? activeDatefin = true : activeDatefin = null" type="radio" checked/>
+                 <span class="white-text" >{{type.libelleTypeContrat}}</span>
+               </label>
+             </div>
+            </div>
+            <div class="input-field col l6" style="margin-top: 45px;">
+              <input type="date" name="dateDebutContrat" formControlName="dateDebutContrat" id="dateDebutContart" class="white-text" >
+              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date début contrat</label>
+            </div>
+            <div class="input-field col l6" style="margin-top: 45px;"  [attr.hidden]="activeDatefin">
+              <input type="date" name="dateFinContrat"  formControlName="dateFinContrat" id="dateDinContrat" class="white-text" >
+              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date Fin contrat</label>
+            </div>
+            <div class="input-field col l6" style="margin-bottom: 50px;margin-top: 30px;">
+              <label for="departement"></label>
+              <select formControlName="departement" name="departement" id="departement" class="browser-default col l6" style="font-weight: bold;margin-top: 10px;">
+                <option value="" disabled selected>DEPARTEMENT</option>
+                <option *ngFor="let departement of listeDepartement" [ngValue]="departement">
+                 {{ departement.nomDepartement }} <i class="black-text fa fa-building-o"></i>
+                </option>
+              </select>
+            </div>
+            <div class="col s6" style="margin-bottom: 60px"></div>
+          </div>
         </div>
       </div>
-      <div  *ngIf="step == 3">
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">date_range</i>
-          <input type="text" id="date_embauche" class="pickadate grey-text text-darken-3" formControlName="date_embauche">
-          <label for="date_embauche" class="grey-text text-darken-3"><span class="red-text">*</span>Date d'embauche</label>
-          <span *ngIf="userForm.get('date_embauche').errors && (userForm.get('date_embauche').touched || userForm.get('date_embauche').dirty)">
-                        <span class="red-text"  *ngIf="userForm.get('date_embauche').errors.required">
-                        Ce champs est obligatoire
-                        </span>
-                    </span>
-        </div>
-        <div class="input-field col l6">
-          <i class="material-icons prefix grey-text text-darken-3">date_range</i>
-          <input type="text" id="date_fin" class="pickadate grey-text text-darken-3" formControlName="date_fin">
-          <label for="date_fin" class="grey-text text-darken-3"><span class="red-text">*</span>Date de fin contrat</label>
-          <span *ngIf="userForm.get('date_fin').errors && (userForm.get('date_fin').touched || userForm.get('date_fin').dirty)">
-                        <span class="red-text"  *ngIf="userForm.get('date_fin').errors.required">
-                        Ce champs est obligatoire
-                        </span>
-                    </span>
-        </div>
-        <i class="material-icons grey-text text-darken-3">people</i>
-        <select formControlName="sexe" name="sexe" id="sexe" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
-          <option value="" disabled selected>Sexe</option>
-          <option value="Masculin">Masculin</option>
-          <option value="Féminin">Féminin</option>
-        </select>
-        <span *ngIf="userForm.get('sexe').errors && (userForm.get('sexe').touched || userForm.get('sexe').dirty)">
-                    <span class="red-text"  *ngIf="userForm.get('sexe').errors.required">
-                        Ce champs est obligatoire
-                    </span>
-                 </span>
-        <i class="material-icons grey-text text-darken-3">people</i>
-        <select formControlName="type_contrat" name="type_contrat" id="type_contrat" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
-          <option value="" disabled selected>TYPE DE CONTRAT</option>
-          <option value="STAGE">STAGE</option>
-          <option value="CDD">CDD</option>
-          <option value="CDI">CDI</option>
-        </select>
-        <span *ngIf="userForm.get('type_contrat').errors && (userForm.get('type_contrat').touched || userForm.get('type_contrat').dirty)">
-                    <span class="red-text"  *ngIf="userForm.get('type_contrat').errors.required">
-                        Ce champs est obligatoire
-                    </span>
-                 </span>
-        <i class="material-icons grey-text text-darken-3">home</i>
-        <select formControlName="departement" name="departement" id="departement" class="browser-default grey lighten-1  grey-text text-darken-3" style="font-weight: bold;">
-          <option value="" disabled selected>DEPARTEMENT</option>
-          <option value="RH">RH</option>
-          <option value="COMPTABILITE">COMPTABILITE</option>
-          <option value="C.GESTION">C.GESTION</option>
-          <option value="T.LOGISTIQUE">TRANSPORT LOGISTIQUE</option>
-        </select>
-        <span *ngIf="userForm.get('type_contrat').errors && (userForm.get('type_contrat').touched || userForm.get('type_contrat').dirty)">
-                    <span class="red-text"  *ngIf="userForm.get('type_contrat').errors.required">
-                        Ce champs est obligatoire
-                    </span>
-                 </span>
-      </div>
-      <div class="center" style="margin-top: 5px;">
-        <button  (click)="onPrevious()" type="button" *ngIf="step != 1" class="btn green darken-4  waves-effect waves-light" style="border-radius: 100px;">
+      <div class="center" style="margin-top: 15px;">
+        <button  (click)="onPrevious()" type="button"
+                 *ngIf="step != 1" class="btn green waves-effect" style="border-radius: 100px;">
+          <i class="material-icons left">chevron_left</i>
           PRECEDENT
         </button>
-        <button (click)="onNext()" type="submit" *ngIf="step < 3" class="btn yellow darken-4  waves-effect waves-light" style="border-radius:100px;margin-left:10px;">
+        <button (click)="onNext()" type="submit" *ngIf="step < 2" class="btn darken-4 green waves-effect" style="border-radius:100px;margin-left:10px;">
+          <i class="material-icons right">chevron_right</i>
           SUIVANT
         </button>
-        <button type="submit" *ngIf="step == 3" class="btn green darken-4 waves-effect waves-light pulse"  style="border-radius:100px;margin-left:10px;">
+        <button type="submit" *ngIf="step == 2" class="btn green waves-effect pulse"  style="border-radius:100px;margin-left:10px;">
+          <i class="material-icons right">save</i>
           VALIDER
         </button>
       </div>

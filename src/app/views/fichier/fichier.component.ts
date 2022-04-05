@@ -24,12 +24,12 @@ export class FichierComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-          this.getAllArchiveByDossierTypeArchiveNature(params.dossier.toString(),
-                                                       params.typeArchive.toString(),
-                                                       params.nature.toString());
-          this.nomDossier = params.dossier.toString();
-          this.nomTypeArchive = params.typeArchive.toString()
-          this.natureArchive =  params.nature.toString();
+          this.getAllArchiveByDossierTypeArchiveNature(params.dossier+'',
+                                                       params.typeArchive+'',
+                                                       params.nature+'');
+          this.nomDossier = params.dossier+'';
+          this.nomTypeArchive = params.typeArchive+''
+          this.natureArchive =  params.nature+'';
         }
       );
     $(".tooltipped").tooltip();

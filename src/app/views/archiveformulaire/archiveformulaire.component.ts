@@ -10,6 +10,7 @@ import {ArchiveDto} from "../../dto/ArchiveDto.model";
 import {Nature} from "../../model/Nature.model";
 import {NatureService} from "../../services/nature.service";
 import Swal from "sweetalert2";
+import {Router} from "@angular/router";
 
 
 declare var $: any
@@ -22,6 +23,13 @@ declare var $: any
 
 
 export class ArchiveformulaireComponent implements OnInit {
+  nomFichier:string = "";
+  activeTypeFichier:boolean = false;
+  activeEmplacement:boolean = false;
+  activeNatureFichier:boolean = false;
+  activeNomFcihier:boolean = false;
+  activeButtonValidation: boolean = false;
+
   listeNature: any = [];
   fileURL: any = "../../../assets/icone_file/95083-file-search.gif";
   fichier: any;
@@ -41,7 +49,8 @@ export class ArchiveformulaireComponent implements OnInit {
               private typeArchiveService: TypeArchiveService,
               private dossierService: DossierService,
               private formBuilder: FormBuilder,
-              private natureService: NatureService) {
+              private natureService: NatureService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -61,10 +70,10 @@ export class ArchiveformulaireComponent implements OnInit {
       this.fichier = file;
       // this.f['profile'].setValue(file);
 
-      var mimeType = event.target.files[0].type;
-      let nomFichier = event.target.files[0].name;
-      var re = /(?:\.([^.]+))?$/;
-      var extension = re.exec(nomFichier)[1];
+      const mimeType = event.target.files[0].type;
+       this.nomFichier = event.target.files[0].name;
+      const re = /(?:\.([^.]+))?$/;
+      var extension = re.exec(this.nomFichier)[1];
 
       if (mimeType.match('text.*|image.*|application.*') == null) {
         return;
@@ -76,7 +85,7 @@ export class ArchiveformulaireComponent implements OnInit {
         this.fileURL = "../assets/icone_file/pdf.png";
 
       } else if (extension == "docx" || mimeType == "doc") {
-        this.fileURL = "../assets/icone_file/pngwing.com.png";
+        this.fileURL = "../assets/icone_file/word.png";
 
       } else if (extension == "pptx") {
         this.fileURL = "../assets/icone_file/power.png";
@@ -92,7 +101,7 @@ export class ArchiveformulaireComponent implements OnInit {
         this.fileURL = "../assets/icone_file/txt.png";
       }
 
-
+        this.activeNomFcihier = true;
       //var reader = new FileReader();
 
       // this.imagePath = file;
@@ -140,23 +149,34 @@ export class ArchiveformulaireComponent implements OnInit {
     archiveDto.nature = natureAjout;
     archiveDto.nature.dossier = dossierAjout;
 
+    if (archiveDto.nature.libelleNature != 'Autre' && archiveDto.nature.dossier.nomDossier != 'Autre'){
+        formData.append('archive', JSON.stringify(archiveDto));
+        formData.append('fichier', this.fichier);
 
-    formData.append('archive', JSON.stringify(archiveDto));
-    formData.append('fichier', this.fichier);
+      let archiveAdded:Archive;
+      this.archiveService.ajouterArchive(formData).subscribe(data => {
+        archiveAdded = data;
+        this.alertArchiveAdded();
+        window.location.href = '/fichier?nature=' + archiveAdded.nature.libelleNature +
+          '&dossier=' + archiveAdded.nature.dossier.nomDossier +
+          '&typeArchive=' + archiveAdded.nature.dossier.typeArchive.libelleTypeArchive
 
-    console.log(archiveDto)
-    this.archiveService.ajouterArchive(formData).subscribe(data => {
+      },error => {
+        console.log(error)
+      });
 
-      // this.route.navigate(['/dashboard']);
-      this.topend();
-    });
+    }else{
+        this.alertArchiveError();
+    }
+
+
+
   }
 
 
   loadListeTypeArchive() {
     this.typeArchiveService.getAllTypeArchive().subscribe(rsl => {
       this.listeTypeArchive = rsl;
-      console.log(this.listeTypeArchive)
     }, error => {
       console.log(error)
     })
@@ -167,10 +187,10 @@ export class ArchiveformulaireComponent implements OnInit {
 
     this.dossierService.getAllDossierByType(this.nomTypeArchive + '').subscribe(result => {
       this.listeDossier = result;
-      console.log(this.listeDossier)
     }, error => {
       console.log(error)
     })
+      this.activeEmplacement=true
   }
 
 
@@ -188,7 +208,9 @@ export class ArchiveformulaireComponent implements OnInit {
         }, error => {
           console.error(error);
         })
+      this.activeNatureFichier = true;
     }
+
   }
 
 
@@ -206,7 +228,9 @@ export class ArchiveformulaireComponent implements OnInit {
           nat = this.listeNature[i];
         }
       }
+      this.activeButtonValidation = true;
     }
+
   }
 
 
@@ -265,13 +289,25 @@ export class ArchiveformulaireComponent implements OnInit {
 
   }
 
-  topend() {
+  alertArchiveAdded() {
     Swal.fire({
-      position: 'top-end',
+      position: 'center',
       icon: 'success',
       title: 'Fichier archivé avec succes!',
-      showConfirmButton: false,
-      timer: 1500
+      showConfirmButton: true,
+      confirmButtonColor:'green'
+      //timer: 1500
+    })
+  }
+
+  alertArchiveError() {
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: 'Veillez choisir un emplacement et la nature du fichier!',
+      showConfirmButton: true,
+      confirmButtonColor:'danger'
+      //timer: 1500
     })
   }
 

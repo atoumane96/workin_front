@@ -7,16 +7,19 @@
           <div class="row TabIndex">
             <ul class="tabs transparent">
               <li class="tab">
-                <a  class="" href="#cardUser" style="border-radius:100px;">
-                  <img src="../../../assets/icone_file/users.png" alt="icone" style="width: 32px;height:30px;padding-top: 10px;"/> UTILISATEURS</a>
-              </li>
-               <li class="tab ">
-                <a  href="#cardDepartement" class="" style="border-radius:100px">
-                  <img src="../../../assets/icone_file/departement.png" alt="icone" style="width: 32px;height:30px;padding-top: 10px;"/> DEPARTEMENTS</a>
+                <a class="" href="#cardUser" style="border-radius:100px;">
+                  <img alt="icone" src="../../../assets/icone_file/users.png"
+                       style="width: 32px;height:30px;padding-top: 10px;"/> UTILISATEURS</a>
               </li>
               <li class="tab ">
-                <a  href="#cardTypeFichier" class="" style="border-radius:100px">
-                  <img src="../../../assets/icone_file/files.png" alt="icone" style="width: 32px;height:30px;padding-top: 10px;"/> TYPE DE FICHIERS</a>
+                <a class="" href="#cardDepartement" style="border-radius:100px">
+                  <img alt="icone" src="../../../assets/icone_file/departement.png"
+                       style="width: 32px;height:30px;padding-top: 10px;"/> DEPARTEMENTS</a>
+              </li>
+              <li class="tab ">
+                <a class="" href="#cardTypeFichier" style="border-radius:100px">
+                  <img alt="icone" src="../../../assets/icone_file/files.png"
+                       style="width: 32px;height:30px;padding-top: 10px;"/> TYPE DE FICHIERS</a>
               </li>
             </ul>
           </div>
@@ -24,19 +27,18 @@
         <li class="right">
           <form #H="ngForm">
             <div class="input-field">
-              <input type="text"  name="Recherche" placeholder="RECHERCHE?"
-                     class="green-text grey white"
+              <input class="green-text grey white" name="Recherche" ngModel
+                     placeholder="RECHERCHE?"
                      style="
                             position: relative;
                             display: flex;
-                            width: 150%;
+                            width: 200%;
                             border: 3px solid green;
-                            border-right: none;
                             padding: 5px;
                             height: 20px;
                             border-radius: 5px 0 0 5px;
                             outline: none;
-                            color: #9DBFAF;" ngModel>
+                            color: #9DBFAF;" type="text">
             </div>
           </form>
         </li>
@@ -44,161 +46,192 @@
     </div>
   </div>
 </nav>
-<div class="section">
-  <div class="row">
-    <div class="card-panel grey lighten-2 col s12" id="cardUser" style="border-radius: 20px;">
-      <div class="modal-header green darken-4">
-        <h5 class="white-text" style="font-family:serif;font-weight: bold;">Liste des utilisateurs</h5>
-      </div>
-      <div class="row">
-        <!----************************* -->
+<section>
+    <div class="row">
+      <div class="card-panel grey lighten-2 col s12" id="cardUser">
+        <div class="modal-header white darken-4">
+          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des utilisateurs</h5>
+        </div>
+        <div class="row">
+          <div *ngFor="let user of listeUtilisateur" class="card" href="#">
+            <div class="col s2 center">
+              <div class="card-panel">
+                <img alt="" class="responsive-img" src="../../../assets/image/USERICONS4.png" width="70px;"><br>
+                <span style="font-weight:bold;color: black;">{{user.prenom}}  {{user.nom}}</span><br>
+                <span class="dark-text text-darken-4" style="font-weight:bold;">{{user.departement.nomDepartement}}</span><br>
+                <span style="color: black;">{{user.email}}</span>
+                <div style="margin-top: 25px;">
+                  <a routerLink="/details" [queryParams]="{email: user.email}" class="btn-floating tooltipped  btn-small waves-effect waves-light blue"
+                     data-position="right"
+                     data-tooltip="archiver un fichier"><i class="fa fa-eye"></i></a>
+                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light red"
+                     data-position="right"
+                     data-tooltip="archiver un fichier"
+                    style="margin-left: 8px;" *ngIf="user.etat" (click)="allertBloquerUtilisateur(user.email)"><i class="fa fa-lock"></i></button>
+                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light green"
+                          data-position="right"
+                          data-tooltip="archiver un fichier"
+                          style="margin-left: 8px;" *ngIf="!user.etat" (click)="allertDeBloquerUtilisateur(user.email)"><i class="fa fa-unlock"></i></button>
 
-        <!--- ***************************-->
-        <a href="#" *ngFor="let i of t" class="card">
-          <div class="col s2 center">
-            <div class="card-panel">
-              <img src="../../../assets/image/USERICONS4.png" alt="" srcset="" width="70px;" class="responsive-img"><br>
-              <span style="font-weight:bold">Atouamane Faye</span><br>
-              <span  class="green-text text-darken-4" style="font-weight:bold">RH</span><br>
-              <span  class="green-text text-darken-4">tou@gmail.com</span>
-              <div style="margin-top: 15px;">
-                <a class="btn-floating tooltipped  btn-small waves-effect waves-light green" data-position="right" data-tooltip="archiver un fichier"><i class="fa fa-eye"></i></a>
-                <a class="btn-floating tooltipped  btn-small waves-effect waves-light orange" data-position="right" data-tooltip="archiver un fichier" style="margin:5px "><i class="fa fa-pencil"></i></a>
-                <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" data-position="right" data-tooltip="archiver un fichier"><i class="fa fa-lock"></i></a>
+                </div>
               </div>
             </div>
           </div>
-        </a>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="card-panel grey lighten-2" id="cardDepartement" style="border-radius: 20px;">
-      <div class="modal-header green darken-4">
-        <h5 class="white-text" style="font-family:serif;font-weight: bold;">Liste des départements</h5>
-      </div>
-      <ul class="collection" style="font-weight: bold;">
-        <li class="collection-item avatar transparent hoverable">
-          <i class="material-icons  circle green darken-4">File</i>
-          <span class="">Title</span>
-          <p class="title grey-text text-darken-3">
-            Second Line
-          </p>
-          <div class="secondary-content">
-            <a  class="btn btn-floating transparent"><i class="material-icons green-text text-darken-4">edit</i></a>
-            <a  class="btn btn-floating transparent"><i class="material-icons red-text text-darken-4">delete</i></a>
+      <div class="card-panel grey lighten-2 col s12" id="cardDepartement" style="border-radius: 20px;">
+        <div class="modal-header white darken-4">
+          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des départements</h5>
+        </div>
+        <div class="row">
+          <div *ngFor="let departement of listeDepartement" class="card" href="#">
+            <div class="col s2 center">
+              <div class="card-panel">
+                <img alt="" class="responsive-img" src="../../../assets/icone_file/dep.png" width="70px;"><br>
+                <span style="font-weight:bold">{{ departement.numeroDepartement }}</span><br>
+                <span class="dark-text text-darken-4"
+                      style="font-weight:bold;color: black">{{ departement.nomDepartement }}</span><br>
+                <div style="margin-top: 25px;">
+                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
+                     data-tooltip="archiver un fichier"><i class="fa fa-pencil-square"></i></a>
+                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" style="margin:5px " data-position="right"
+                     data-tooltip="archiver un fichier"><i class="fa fa-trash"></i></a>
+                </div>
+              </div>
+            </div>
           </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="card-panel grey lighten-2" id="cardTypeFichier" style="border-radius: 20px;">
-      <div class="modal-header green darken-4">
-        <h5 class="white-text" style="font-family:serif;font-weight: bold;">Liste des types de fichiers</h5>
+        </div>
       </div>
-      <ul class="collection" style="font-weight: bold;">
-        <li class="collection-item avatar transparent hoverable">
-          <i class="material-icons  circle green darken-4">attach_file</i>
-          <span class="">Title</span>
-          <p class="title grey-text text-darken-3">
-            Second Line
-          </p>
-          <div class="secondary-content">
-            <a  class="btn btn-floating transparent"><i class="material-icons green-text text-darken-4">edit</i></a>
-            <a  class="btn btn-floating transparent"><i class="material-icons red-text text-darken-4">delete</i></a>
+      <div class="card-panel grey lighten-2 col s12" id="cardTypeFichier" style="border-radius: 20px;">
+        <div class="modal-header white darken-4">
+          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des type Archive</h5>
+        </div>
+        <div class="row">
+          <div *ngFor="let type of listeTypeArchive" class="card" href="#">
+            <div class="col s2 center">
+              <div class="card-panel">
+                <img alt="" class="responsive-img" src="../../../assets/icone_file/folder.png" srcset="" width="70px"><br>
+                <span style="font-weight:bold;color: black">{{ type.libelleTypeArchive }}</span><br>
+                <div style="margin-top: 25px;">
+                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
+                     data-tooltip="archiver un fichier"><i class="fa fa-pencil"></i></a>
+                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" data-position="right"
+                     data-tooltip="archiver un fichier" style="margin:5px "><i class="fa fa-trash"></i></a>
+                </div>
+              </div>
+            </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
+    </div>
+
+    <!--
+        section pour le chargement -->
+
+</section>
+
+<section>
+  <div class="preloader-wrapper white medium active" id="loading">
+    <div class="spinner-layer spinner-white-only">
+      <div class="circle-clipper left green darken-4">
+
+      </div>
+      <div class="gap-patch">
+
+      </div>
+      <div class="circle-clipper right grey darken-4">
+
+      </div>
     </div>
   </div>
-  <!--
-      section pour le chargement -->
 
-  <div class="fixed-action-btn">
-    <a  class="btn-floating btn-large grey darken-3  pulse">
+  <div class="modal white lighten-2" id="modalDepartement">
+    <div class="modal-header xidmaColor">
+      <div class="btn btn-floating tooltipped green right modal-close" data-position="bottom" data-tooltip="FERME"><i
+        class="material-icons  white-text">close</i></div>
+      <div style="display: flex; flex-direction: row;">
+        <img alt="lksdf" src="../../../assets/icone_file/departe.gif" style="width: 200px; height: 200px;"/>
+        <h4 style="margin-top: 100px;">Nouveau département</h4>
+      </div>
+    </div>
+    <div class="modal-content">
+      <form #D="ngForm" (ngSubmit)="creationDepartement(D.value)">
+        <div class="input-field" style="font-weight: bold;">
+          <input [value]="valeur" id="departement" name="nomDepartement" ngModel type="text">
+          <p class="red-text">{{champsNomDepartementRequit}}</p>
+          <label class="grey-text text-darken-3" for="departement">Nom du département</label>
+        </div>
+        <div class="modal-footer transparent">
+          <div class="center">
+            <button class="btn red darken-4 white-text hoverable" style="border-radius: 100px;" type="reset">
+              <i class="material-icons right">cancel</i>ANNULER
+            </button>
+            <button class="btn xidmaColor white-text  hoverable green"
+                    style="border-radius: 100px;margin-left:10px"
+                    type="submit" [class.modal-close]="champsNomDepartementRequit != '' ">
+              <i class="material-icons right">done</i>{{statutButton}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="modal white lighten-2" id="modalTypeFichier">
+    <div class="modal-header xidmaColor">
+      <div class="btn btn-floating tooltipped green right modal-close" data-position="bottom" data-tooltip="FERME"><i
+        class="material-icons  white-text">close</i></div>
+      <div style="display: flex; flex-direction: row;margin-top: 20px">
+        <img alt="lksdf" src="../../../assets/icone_file/typef.gif" style="width: 100px; height: 100px;"/>
+        <h4 style="margin-top: 30px;margin-left: 10px;">Nouveau Type d'archive</h4>
+      </div>
+    </div>
+    <div class="modal-content">
+      <form #F="ngForm" (ngSubmit)="creationTypeFichier(F.value)" id="formulaire">
+        <div class="input-field" style="font-weight: bold;">
+          <input id="typeFichier" name="libelleTypeArchive" ngModel type="text">
+          <label class="grey-text text-darken-3" for="departement">Nom du Type de fichier</label>
+          <p class="red-text">{{ champsNomTypeFichierRequit }}</p>
+        </div>
+        <div class="modal-footer transparent">
+          <div class="center">
+            <button class="btn red darken-4 white-text hoverable" style="border-radius: 100px;" type="reset">
+              <i class="material-icons right">cancel</i>ANNULER
+            </button>
+            <button class="btn xidmaColor white-text  hoverable green"
+                    style="border-radius: 100px;
+                    margin-left: 10px"
+                    type="submit"
+                    [class.modal-close]="champsNomTypeFichierRequit != '' ">
+              <i class="material-icons right">done</i>{{statutButton}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="fixed-action-btn" style="margin-bottom: 100px;">
+    <a class="btn-floating btn-large grey darken-2  pulse">
       <i class="material-icons">add</i>
     </a>
     <ul>
       <li>
-        <a  data-target="modalTypeFichier" class="btn-floating grey darken-4  modal-trigger">
+        <a class="btn-floating grey darken-4  modal-trigger" data-target="modalTypeFichier">
           <i class="material-icons">attach_file</i>
         </a>
       </li>
       <li>
-        <a  data-target="modalDepartement" class="btn-floating grey darken-4 modal-trigger">
+        <a class="btn-floating grey darken-4 modal-trigger" data-target="modalDepartement">
           <i class="material-icons">home</i>
         </a>
       </li>
       <li>
-        <a routerLink="/ajouter_utilisateur" class="btn-floating grey darken-4">
+        <a class="btn-floating grey darken-4" routerLink="/ajouter_utilisateur">
           <i class="material-icons">people</i>
         </a>
       </li>
     </ul>
   </div>
-</div>
-
-
-<div class="preloader-wrapper white medium active" id="loading">
-  <div class="spinner-layer spinner-white-only">
-    <div class="circle-clipper left green darken-4">
-
-    </div><div class="gap-patch">
-
-  </div><div class="circle-clipper right grey darken-4">
-
-  </div>
-  </div>
-</div>
-
-<div id="modalDepartement" class="modal grey lighten-2">
-  <div class="modal-header xidmaColor">
-    <div class="btn btn-floating tooltipped transparent right modal-close" data-position="bottom" data-tooltip="FERME"><i class="material-icons  white-text">close</i></div>
-    <h5 class="white-text" style="font-family:serif;font-weight: bold;">Ajoutez un département</h5>
-  </div>
-  <div class="modal-content">
-    <form #D="ngForm" (ngSubmit)="creationDepartement(D.value)" >
-      <div class="input-field" style="font-weight: bold;">
-        <i class="material-icons prefix grey-text text-darken-3">home</i>
-        <input ngModel type="text" name="departement" id="departement" [value]="valeur">
-        <label for="departement" class="grey-text text-darken-3">Département</label>
-      </div>
-      <div class="modal-footer transparent">
-        <div class="center">
-          <button   type="reset" class="btn red darken-4 white-text hoverable" style="border-radius: 100px;">
-            <i class="material-icons right">cancel</i>ANNULER</button>
-          <button  type="submit" class="btn xidmaColor white-text  hoverable" style="border-radius: 100px;margin-left:10px">
-            <i class="material-icons right">done</i>{{statutButton}}</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-<div id="modalTypeFichier" class="modal grey lighten-2">
-  <div class="modal-header xidmaColor">
-    <div class="btn btn-floating tooltipped transparent right modal-close" data-position="bottom" data-tooltip="FERME"><i class="material-icons  white-text">close</i></div>
-    <h5 class="white-text" style="font-family:serif;font-weight: bold;">Ajoutez un type de fichiers</h5>
-  </div>
-  <div class="modal-content">
-    <form #F="ngForm" (ngSubmit)="creationTypeFichier(F.value)" id="formulaire">
-      <div class="input-field" style="font-weight: bold;">
-        <i class="material-icons prefix grey-text text-darken-3">attach_file</i>
-        <input  ngModel type="text" name="typeFichier" id="typeFichier">
-        <label for="departement" class="grey-text text-darken-3">Type de fichier</label>
-      </div>
-      <div class="modal-footer transparent">
-        <div class="center">
-          <button type="reset" class="btn red darken-4 white-text hoverable" style="border-radius: 100px;">
-            <i class="material-icons left">cancel</i>ANNULER</button>
-          <button type="submit" class="btn xidmaColor white-text hoverable" style="border-radius: 100px;">
-            <i class="material-icons right">save</i>VALIDER</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
+</section>

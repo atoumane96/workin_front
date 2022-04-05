@@ -22,9 +22,9 @@ export class NatureComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-          this.nomDossier = params.dossier.toString();
-          this.nomTypeArchive = params.typeArchive.toString();
-          this.loadListeNature(params.dossier.toString(), params.typeArchive.toString())
+          this.nomDossier = params.dossier+"";
+          this.nomTypeArchive = params.typeArchive+"";
+          this.loadListeNature(params.dossier.toString(), params.typeArchive+"")
         }
       );
 

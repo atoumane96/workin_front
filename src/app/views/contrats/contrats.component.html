@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<section>
+  <div class="row">
+    <div class="col s2"></div>
+    <div class="col s10">
+      <p>Les contrats de : <b> {{prenom}} </b>  <b> {{nom | uppercase}} </b></p>
+      <div class="col s8 card" style="display: flex;flex-direction: row; justify-content: space-evenly">
+        <h6></h6>
+        <h6><b><i class="fa fa-sort-numeric-asc"></i> Numéro</b></h6>
+        <h6><b><i class="fa fa-file-pdf-o"></i> Type de Contrat</b></h6>
+        <h6><b><i class="fa fa-clock-o"></i> Date de début</b></h6>
+        <h6><b><i class="fa fa-clock-o"></i> Date de fin</b></h6>
+      </div>
+      <div class="col s8 card hoverable" style="display: flex;
+                                                flex-direction: row;
+                                                justify-content: space-between"
+      *ngFor="let contrat of listeContrat">
+        <h6><i class="green-text fa fa-folder"></i></h6>
+        <h6>{{contrat.numeroContrat}}</h6>
+        <h6>{{contrat.typeContrat.libelleTypeContrat}}</h6>
+        <h6>{{contrat.dateDebut | date:'dd/MM/yyyy'}}</h6>
+        <h6>{{contrat.dateFin | date:'dd/MM/yyyy' }}</h6>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>

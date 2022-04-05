@@ -18,11 +18,11 @@ export class TypeArchiveService {
   }
 
   public getAllTypeArchive():Observable<TypeArchive[]>{
-    return this.http.get<any>(`\${this.host}+this.ressource/all`);
+    return this.http.get<any>(environment.host + this.ressource + "/all");
   }
 
-  public ajouterTypeArchive(utilisateur: Utilisateur):Observable<Utilisateur>{
-    return this.http.post<Utilisateur>(environment.host+this.ressource,utilisateur);
+  public ajouterTypeArchive(typeArchive: TypeArchive):Observable<TypeArchive>{
+    return this.http.post<TypeArchive>(environment.host + this.ressource + "/create",typeArchive);
   }
 
   public modifierTypeArchive(id: number, utilisateur: Utilisateur):Observable<Utilisateur>{

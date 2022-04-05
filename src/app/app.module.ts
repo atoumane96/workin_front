@@ -21,8 +21,10 @@ import { Error404Component } from './views/error404/error404.component';
 // import { FichierComponent } from './views/fichier/fichier.component';
 import { ArchiveformulaireComponent } from './views/archiveformulaire/archiveformulaire.component';
 import { NatureComponent } from './views/nature/nature.component';
-import { UtilisateurformulaireComponent } from './views/utilisateurformulaire/utilisateurformulaire.component';
 import {FichierComponent} from "./views/fichier/fichier.component";
+import {UtilisateurformulaireComponent} from "./views/utilisateurformulaire/utilisateurformulaire.component";
+import { UtilisateurDetailsComponent } from './views/utilisateur-details/utilisateur-details.component';
+import { ContratsComponent } from './views/contrats/contrats.component';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import {FichierComponent} from "./views/fichier/fichier.component";
     ArchiveformulaireComponent,
     NatureComponent,
     UtilisateurformulaireComponent,
+    UtilisateurDetailsComponent,
+    ContratsComponent,
   ],
   imports: [
     BrowserModule,

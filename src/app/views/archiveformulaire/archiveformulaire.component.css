@@ -67,4 +67,11 @@
   margin-bottom: 0;
 }
 
+#barreArchive{
+  background: rgb(6,6,6);
+  background: linear-gradient(90deg, rgba(6,6,6,1) 4%, rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);
+  margin-left: 250px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
 

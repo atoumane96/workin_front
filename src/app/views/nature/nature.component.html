@@ -5,7 +5,7 @@
     <li><a routerLink="/dossier" [queryParams]="{type: nomTypeArchive}"
            class="white-text">{{ nomTypeArchive | lowercase}}</a></li>
     <li><a routerLink="/nature"
-           [queryParams]="{dossier: nomDossier,typeArchive:nomTypeArchive}">{{ nomDossier | lowercase}}</a></li>
+           [queryParams]="{dossier: nomDossier,typeArchive:nomTypeArchive}" class="green-text">{{ nomDossier | lowercase}}</a></li>
   </ul>
 </div>
 <!-- section des statistiques -->
@@ -17,7 +17,7 @@
                                               typeArchive:nature.dossier.typeArchive.libelleTypeArchive }"
        class="col s2 tab card-panel transparent hoverable center-align"
        *ngFor="let nature of listeNature let i = index">
-      <img src="../assets/icone_file/blue_download_alt_folder_12391.png" alt="aezr"/>
+      <img src="../assets/icone_file/greenfold.png" alt="aezr"/>
       <h5 id="Tab" class="grey-text text-darken-4 active"
           style="font-weight:bold;border-radius:100px">{{ nature.libelleNature }}</h5>
     </a>
