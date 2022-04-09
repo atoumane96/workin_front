@@ -1,134 +1,277 @@
 <app-navbar></app-navbar>
-<nav class="section white" id="navbar">
-  <div class="nav-wrapper">
-    <div class="container">
-      <ul class="left-on-med-and-down">
-        <li>
-          <div class="row TabIndex">
-            <ul class="tabs transparent">
-              <li class="tab">
-                <a class="" href="#cardUser" style="border-radius:100px;">
-                  <img alt="icone" src="../../../assets/icone_file/users.png"
-                       style="width: 32px;height:30px;padding-top: 10px;"/> UTILISATEURS</a>
-              </li>
-              <li class="tab ">
-                <a class="" href="#cardDepartement" style="border-radius:100px">
-                  <img alt="icone" src="../../../assets/icone_file/departement.png"
-                       style="width: 32px;height:30px;padding-top: 10px;"/> DEPARTEMENTS</a>
-              </li>
-              <li class="tab ">
-                <a class="" href="#cardTypeFichier" style="border-radius:100px">
-                  <img alt="icone" src="../../../assets/icone_file/files.png"
-                       style="width: 32px;height:30px;padding-top: 10px;"/> TYPE DE FICHIERS</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li class="right">
-          <form #H="ngForm">
-            <div class="input-field">
-              <input class="green-text grey white" name="Recherche" ngModel
-                     placeholder="RECHERCHE?"
-                     style="
-                            position: relative;
-                            display: flex;
-                            width: 200%;
-                            border: 3px solid green;
-                            padding: 5px;
-                            height: 20px;
-                            border-radius: 5px 0 0 5px;
-                            outline: none;
-                            color: #9DBFAF;" type="text">
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<section>
-    <div class="row">
-      <div class="card-panel grey lighten-2 col s12" id="cardUser">
-        <div class="modal-header white darken-4">
-          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des utilisateurs</h5>
-        </div>
-        <div class="row">
-          <div *ngFor="let user of listeUtilisateur" class="card" href="#">
-            <div class="col s2 center">
-              <div class="card-panel">
-                <img alt="" class="responsive-img" src="../../../assets/image/USERICONS4.png" width="70px;"><br>
-                <span style="font-weight:bold;color: black;">{{user.prenom}}  {{user.nom}}</span><br>
-                <span class="dark-text text-darken-4" style="font-weight:bold;">{{user.departement.nomDepartement}}</span><br>
-                <span style="color: black;">{{user.email}}</span>
-                <div style="margin-top: 25px;">
-                  <a routerLink="/details" [queryParams]="{email: user.email}" class="btn-floating tooltipped  btn-small waves-effect waves-light blue"
-                     data-position="right"
-                     data-tooltip="archiver un fichier"><i class="fa fa-eye"></i></a>
-                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light red"
-                     data-position="right"
-                     data-tooltip="archiver un fichier"
-                    style="margin-left: 8px;" *ngIf="user.etat" (click)="allertBloquerUtilisateur(user.email)"><i class="fa fa-lock"></i></button>
-                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light green"
-                          data-position="right"
-                          data-tooltip="archiver un fichier"
-                          style="margin-left: 8px;" *ngIf="!user.etat" (click)="allertDeBloquerUtilisateur(user.email)"><i class="fa fa-unlock"></i></button>
+<!--<nav class="section white col s12 m12 l12 xl12" id="navbar">-->
+<!--  <div class="nav-wrapper">-->
+<!--    <div class="container">-->
+<!--      <ul class="left-on-med-and-down">-->
+<!--        <li>-->
+<!--          <div class="row TabIndex col s12 m12 l12 xl12">-->
+<!--            <ul class="tabs transparent">-->
+<!--              <li class="tab">-->
+<!--                <a class="" href="#cardUser" style="border-radius:100px;">-->
+<!--                  <img alt="icone" src="../../../assets/icone_file/users.png"-->
+<!--                       style="width: 32px;height:30px;padding-top: 10px;"/> UTILISATEURS</a>-->
+<!--              </li>-->
+<!--              <li class="tab ">-->
+<!--                <a class="" href="#cardDepartement" style="border-radius:100px">-->
+<!--                  <img alt="icone" src="../../../assets/icone_file/departement.png"-->
+<!--                       style="width: 32px;height:30px;padding-top: 10px;"/> DEPARTEMENTS</a>-->
+<!--              </li>-->
+<!--              <li class="tab ">-->
+<!--                <a class="" href="#cardTypeFichier" style="border-radius:100px">-->
+<!--                  <img alt="icone" src="../../../assets/icone_file/files.png"-->
+<!--                       style="width: 32px;height:30px;padding-top: 10px;"/> TYPE DE FICHIERS</a>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--        <li class="right">-->
+<!--          <form #H="ngForm">-->
+<!--            <div class="input-field">-->
+<!--              <input class="green-text grey white col s12 l12 m12 xl12" name="Recherche" ngModel-->
+<!--                     placeholder="RECHERCHE?"-->
+<!--                     style="-->
+<!--                            position: relative;-->
+<!--                            display: flex;-->
+<!--                            width: 200%;-->
+<!--                            border: 3px solid green;-->
+<!--                            padding: 5px;-->
+<!--                            height: 20px;-->
+<!--                            border-radius: 5px 0 0 5px;-->
+<!--                            outline: none;-->
+<!--                            color: #9DBFAF;" type="text">-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</nav>-->
+<!--<section>-->
+<!--  <div class="row">-->
+<!--      <div class="card-panel grey lighten-2 col s12 l12 m12 xl12" id="cardUser">-->
+<!--        <div class="modal-header white darken-4">-->
+<!--          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des utilisateurs</h5>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div *ngFor="let user of listeUtilisateur" class="card">-->
+<!--            <div class="col s12 m4 l2 center">-->
+<!--              <div class="card-panel">-->
+<!--                <img alt="" class="responsive-img circle" [src]="user.photo" style="width: 80px; height: 80px;"><br>-->
+<!--                <span style="font-weight:bold;color: black;">{{user.prenom}}  {{user.nom}}</span><br>-->
+<!--                <span class="dark-text text-darken-4" style="font-weight:bold;">{{user.departement.nomDepartement}}</span><br>-->
+<!--                <span style="color: black;">{{user.email}}</span>-->
+<!--                <div style="margin-top: 25px;">-->
+<!--                  <a routerLink="/details" [queryParams]="{email: user.email}" class="btn-floating tooltipped  btn-small waves-effect waves-light blue"-->
+<!--                     data-position="right"-->
+<!--                     data-tooltip="archiver un fichier"><i class="fa fa-eye"></i></a>-->
+<!--                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light red"-->
+<!--                     data-position="right"-->
+<!--                     data-tooltip="archiver un fichier"-->
+<!--                    style="margin-left: 8px;" *ngIf="user.etat" (click)="allertBloquerUtilisateur(user.email)"><i class="fa fa-lock"></i></button>-->
+<!--                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light green"-->
+<!--                          data-position="right"-->
+<!--                          data-tooltip="archiver un fichier"-->
+<!--                          style="margin-left: 8px;" *ngIf="!user.etat" (click)="allertDeBloquerUtilisateur(user.email)"><i class="fa fa-unlock"></i></button>-->
 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-panel grey lighten-2 col s12" id="cardDepartement" style="border-radius: 20px;">
-        <div class="modal-header white darken-4">
-          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des départements</h5>
-        </div>
-        <div class="row">
-          <div *ngFor="let departement of listeDepartement" class="card" href="#">
-            <div class="col s2 center">
-              <div class="card-panel">
-                <img alt="" class="responsive-img" src="../../../assets/icone_file/dep.png" width="70px;"><br>
-                <span style="font-weight:bold">{{ departement.numeroDepartement }}</span><br>
-                <span class="dark-text text-darken-4"
-                      style="font-weight:bold;color: black">{{ departement.nomDepartement }}</span><br>
-                <div style="margin-top: 25px;">
-                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
-                     data-tooltip="archiver un fichier"><i class="fa fa-pencil-square"></i></a>
-                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" style="margin:5px " data-position="right"
-                     data-tooltip="archiver un fichier"><i class="fa fa-trash"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-panel grey lighten-2 col s12" id="cardTypeFichier" style="border-radius: 20px;">
-        <div class="modal-header white darken-4">
-          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des type Archive</h5>
-        </div>
-        <div class="row">
-          <div *ngFor="let type of listeTypeArchive" class="card" href="#">
-            <div class="col s2 center">
-              <div class="card-panel">
-                <img alt="" class="responsive-img" src="../../../assets/icone_file/folder.png" srcset="" width="70px"><br>
-                <span style="font-weight:bold;color: black">{{ type.libelleTypeArchive }}</span><br>
-                <div style="margin-top: 25px;">
-                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
-                     data-tooltip="archiver un fichier"><i class="fa fa-pencil"></i></a>
-                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" data-position="right"
-                     data-tooltip="archiver un fichier" style="margin:5px "><i class="fa fa-trash"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--      <div class="card-panel grey lighten-2 col s12 l12 m12 xl12" id="cardDepartement" style="border-radius: 20px;">-->
+<!--        <div class="modal-header white darken-4">-->
+<!--          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des départements</h5>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div *ngFor="let departement of listeDepartement" class="card" href="#">-->
+<!--            <div class="col s12 m2 l2 center">-->
+<!--              <div class="card-panel">-->
+<!--                <img alt="" class="responsive-img" src="../../../assets/icone_file/dep.png" width="70px;"><br>-->
+<!--                <span style="font-weight:bold">{{ departement.numeroDepartement }}</span><br>-->
+<!--                <span class="dark-text text-darken-4"-->
+<!--                      style="font-weight:bold;color: black">{{ departement.nomDepartement }}</span><br>-->
+<!--                <div style="margin-top: 25px;">-->
+<!--                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"-->
+<!--                     data-tooltip="archiver un fichier"><i class="fa fa-pencil-square"></i></a>-->
+<!--                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" style="margin:5px " data-position="right"-->
+<!--                     data-tooltip="archiver un fichier"><i class="fa fa-trash"></i></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--  </div>-->
+<!--  <div class="row">-->
+<!--      <div class="card-panel grey lighten-2 col s12 l12 m12 xl12" id="cardTypeFichier" style="border-radius: 20px;">-->
+<!--        <div class="modal-header white darken-4">-->
+<!--          <h5 class="dark-text" style="font-family:serif;font-weight: bold;">Liste des type Archive</h5>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div *ngFor="let type of listeTypeArchive" class="card" href="#">-->
+<!--            <div class="col s12 m2 l2 center">-->
+<!--              <div class="card-panel">-->
+<!--                <img alt="" class="responsive-img" src="../../../assets/icone_file/folder.png" srcset="" width="70px"><br>-->
+<!--                <span style="font-weight:bold;color: black">{{ type.libelleTypeArchive }}</span><br>-->
+<!--                <div style="margin-top: 25px;">-->
+<!--                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"-->
+<!--                     data-tooltip="archiver un fichier"><i class="fa fa-pencil"></i></a>-->
+<!--                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" data-position="right"-->
+<!--                     data-tooltip="archiver un fichier" style="margin:5px "><i class="fa fa-trash"></i></a>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--  </div>-->
 
-    <!--
-        section pour le chargement -->
+<!--    &lt;!&ndash;-->
+<!--        section pour le chargement &ndash;&gt;-->
+<!--</section>-->
 
-</section>
+		<div class="tab_container">
+			<input id="tab1" type="radio" name="tabs" checked>
+			<label for="tab1"><i class="fa fa-users"></i><span>Utilisateurs</span></label>
+
+			<input id="tab2" type="radio" name="tabs">
+			<label for="tab2"><i class="fa fa-building"></i><span>Departement</span></label>
+
+			<input id="tab3" type="radio" name="tabs">
+			<label for="tab3"><i class="fa fa-folder-open-o"></i><span>Archives</span></label>
+
+			<input id="tab4" type="radio" name="tabs">
+			<label for="tab4"><i class="fa fa-folder-open-o"></i><span>Portfolio</span></label>
+
+			<input id="tab5" type="radio" name="tabs">
+			<label for="tab5"><i class="fa fa-envelope-o"></i><span>Contact</span></label>
+
+			<section id="content1" class="tab-content">
+		       <div class="row">
+		         <div *ngFor="let user of listeUtilisateur" class="card">
+		            <div class="col s12 m4 l2 center">
+		              <div class="card-panel">
+		                <img alt="" class="responsive-img circle" [src]="user.photo" style="width: 80px; height: 80px;"><br>
+		                <span style="font-weight:bold;color: black;">{{user.prenom}}  {{user.nom}}</span><br>
+		                <span class="dark-text text-darken-4" style="font-weight:bold;">{{user.departement.nomDepartement}}</span><br>
+		                <span style="color: black;">{{user.email}}dsfl,skfl,sdlk,</span>
+		                <div style="margin-top: 25px;">
+		                  <a routerLink="/details" [queryParams]="{email: user.email}" class="btn-floating tooltipped  btn-small waves-effect waves-light blue"
+		                     data-position="right"
+		                     data-tooltip="archiver un fichier"><i class="fa fa-eye"></i>
+		                 </a>
+		                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light red"
+		                     data-position="right"
+		                     data-tooltip="archiver un fichier"
+		                    style="margin-left: 8px;" *ngIf="user.etat" (click)="allertBloquerUtilisateur(user.email)"><i class="fa fa-lock"></i>
+		                </button>
+		                  <button class="btn-floating tooltipped  btn-small waves-effect waves-light green"
+		                          data-position="right"
+		                          data-tooltip="archiver un fichier"
+		                          style="margin-left: 8px;" *ngIf="!user.etat" (click)="allertDeBloquerUtilisateur(user.email)"><i class="fa fa-unlock"></i>
+		                   </button>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+			</section>
+
+			<section id="content2" class="tab-content">
+				<div class="row">
+		          <div *ngFor="let departement of listeDepartement" class="card" href="#">
+		           <div class="col s12 m2 l2 center">
+		             <div class="card-panel">
+		               <img alt="" class="responsive-img" src="../../../assets/icone_file/dep.png" width="70px;"><br>
+		              <span style="font-weight:bold">{{ departement.numeroDepartement }}</span><br>
+		                <span class="dark-text text-darken-4"
+		                      style="font-weight:bold;color: black">{{ departement.nomDepartement }}</span><br>
+		                <div style="margin-top: 25px;">
+		                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
+		                     data-tooltip="archiver un fichier"><i class="fa fa-pencil-square"></i></a>
+		                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" style="margin:5px " data-position="right"
+		                     data-tooltip="archiver un fichier"><i class="fa fa-trash"></i></a>
+		                </div>
+		              </div>
+		           </div>
+		          </div>
+		        </div>
+			</section>
+
+			<section id="content3" class="tab-content">      
+			      <div class="row">
+			          <div *ngFor="let type of listeTypeArchive" class="card" href="#">
+			            <div class="col s12 m2 l2 center">
+			              <div class="card-panel">
+			                <img alt="" class="responsive-img" src="../../../assets/icone_file/folder.png" srcset="" width="70px"><br>
+			                <span style="font-weight:bold;color: black">{{ type.libelleTypeArchive }}</span><br>
+			                <div style="margin-top: 25px;">
+			                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light blue" data-position="right"
+			                     data-tooltip="archiver un fichier"><i class="fa fa-pencil"></i></a>
+			                  <a class="btn-floating tooltipped  btn-small waves-effect waves-light red" data-position="right"
+			                     data-tooltip="archiver un fichier" style="margin:5px "><i class="fa fa-trash"></i></a>
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+			      </div>
+			</section>
+
+			<section id="content4" class="tab-content">
+				<h3>Headline 4</h3>
+		      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		      	tempor incididunt ut labore et dolore magna aliqua.</p>
+		      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		      	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		      	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		      	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		      	cillum dolore eu fugiat nulla pariatur.</p>
+		      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		      	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		      	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		      	consequat.</p>
+			</section>
+
+			<section id="content5" class="tab-content">
+				<h3>Headline 5</h3>
+		      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		      	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		      	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+		      	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		      	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		      	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		      	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		      	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		      	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section>
+		</div>
+
+<p class="no_wrap">
+  And Of-course this paragrapgh with not wrap Tab
+</p>
+
+<p class="link">
+  Just in case you want to go through the tutorial follow this link: <a href="http://www.sevensignature.com/blog/code/responsive-pure-css-tabs/">Responsive Pure CSS Tabs</a>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section>
   <div class="preloader-wrapper white medium active" id="loading">
@@ -161,6 +304,7 @@
           <p class="red-text">{{champsNomDepartementRequit}}</p>
           <label class="grey-text text-darken-3" for="departement">Nom du département</label>
         </div>
+
         <div class="modal-footer transparent">
           <div class="center">
             <button class="btn red darken-4 white-text hoverable" style="border-radius: 100px;" type="reset">
@@ -188,12 +332,27 @@
     </div>
     <div class="modal-content">
       <form #F="ngForm" (ngSubmit)="creationTypeFichier(F.value)" id="formulaire">
-        <div class="input-field" style="font-weight: bold;">
-          <input id="typeFichier" name="libelleTypeArchive" ngModel type="text">
-          <label class="grey-text text-darken-3" for="departement">Nom du Type de fichier</label>
-          <p class="red-text">{{ champsNomTypeFichierRequit }}</p>
+        <div class="row">
+           <div class="col s12 m10 l10">
+             <div class="" style="font-weight: bold;">
+               <label for="typeFichier" class="grey-text text-darken-3">Nom du Type d'archive</label>
+               <input id="typeFichier" name="libelleTypeArchive" ngModel type="text">
+               <i class="red-text">{{ champsNomTypeFichierRequit }}</i>
+             </div>
+           </div>
+          <div class="col s12 m6 l6">
+            <div class="input-field" style="font-weight: bold; margin-top: 20px;">
+              <label>
+                <i class="red-text">{{ choisirDepartement }}</i>
+                <select class="grey lighten-2 browser-default" ngModel name="departement" >
+                  <option selected>Chosir le département</option>
+                  <option *ngFor="let dep of listeDepartement" [ngValue]="dep">{{dep.nomDepartement}}</option>
+                </select>
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="modal-footer transparent">
+        <div class="modal-footer transparent" style="margin-top: 50px;">
           <div class="center">
             <button class="btn red darken-4 white-text hoverable" style="border-radius: 100px;" type="reset">
               <i class="material-icons right">cancel</i>ANNULER
@@ -202,7 +361,7 @@
                     style="border-radius: 100px;
                     margin-left: 10px"
                     type="submit"
-                    [class.modal-close]="champsNomTypeFichierRequit != '' ">
+                    [ngClass]="{'modal-close':formAddTypeArchiveValid}">
               <i class="material-icons right">done</i>{{statutButton}}</button>
           </div>
         </div>
@@ -211,7 +370,7 @@
   </div>
 </section>
 
-<section>
+<section class="col s2 m2 l12">
   <div class="fixed-action-btn" style="margin-bottom: 100px;">
     <a class="btn-floating btn-large grey darken-2  pulse">
       <i class="material-icons">add</i>

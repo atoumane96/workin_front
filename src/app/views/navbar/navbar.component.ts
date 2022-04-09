@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import {AuthenticationService} from "../../services/authentication.service";
+import {Utilisateur} from "../../model/Utilisateur.model";
 declare var $ :any
 
 @Component({
@@ -12,20 +13,24 @@ declare var $ :any
 })
 export class NavbarComponent implements OnInit {
 
-  private nom;
-  private prenom;
-  private email;
-  private departement;
+  private utilisateur:Utilisateur;
 
   constructor(private authService: AuthenticationService,
               private router: Router) { }
 
   ngOnInit() {
     this.myJsFunctionality();
-    this.nom = this.authService.authenticatedUser.nom;
-    this.prenom = this.authService.authenticatedUser.prenom;
-    this.email = this.authService.authenticatedUser.email;
-    this.departement = this.authService.authenticatedUser.departement.nomDepartement;
+    this.utilisateur = this.authService.authenticatedUser;
+    console.log("-->"+this.utilisateur.photo)
+    if(this.utilisateur.photo == ""){
+
+      this.utilisateur.photo = "../../../assets/icone_file/user.png";
+
+    }else{
+
+      this.utilisateur.photo = 'data:image/jpeg;base64,' + this.utilisateur.photo;
+    }
+
   }
 
 

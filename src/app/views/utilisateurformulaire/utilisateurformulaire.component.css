@@ -10,3 +10,27 @@ span {
   padding-left: 25px;
   padding-right: 5px;
 }
+
+
+.little-text{
+  font-size: 12px;
+}
+
+.titre-form{
+  font-size: 18px;
+  letter-spacing: 0.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 25px;
+  margin-left: 15px;
+  padding: 10px;
+}
+.pere{
+  margin-left: -50px;
+  border-radius: 20px;
+  background: rgb(6,6,6);
+  margin-bottom: 50px;
+  background: linear-gradient(90deg, rgba(6,6,6,1) 4%, rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);
+  width: 60%;
+}

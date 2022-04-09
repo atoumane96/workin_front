@@ -16,7 +16,9 @@ declare var $:any;
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
+  showPatienter:boolean = false;
   errorMessage:string;
+  bloquer:string = "";
   constructor(private authService: AuthenticationService ,
               private router: Router,
               private utilisateurService:UtilisateurService) {}
@@ -25,10 +27,13 @@ export class LoginComponent implements OnInit {
     this.initForm();
     this.AfficherFormulaire();
     this.isAlreadyConnected();
+    $('#patienter').hide();
+
     //this.loading();
    // console.log('connecté: '+this.authService.authenticated);
 
   }
+
   initForm(){
     this.formGroup = new FormGroup({
       login:new FormControl('',[Validators.required]),
@@ -68,6 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginProcess() {
+      this.showPatienter = true;
     if(this.formGroup.valid){
       this.authService.login(this.formGroup.value).subscribe(result=>{
           let jwtHelper = new JwtHelperService();
@@ -77,15 +83,21 @@ export class LoginComponent implements OnInit {
            let email = jwtHelper.decodeToken(result.accessToken).sub;
 
            this.utilisateurService.getAllUserByEmail(email).subscribe(rs=>{
-             this.authService.authenticatedUser  = rs;
-             console.log(this.authService.authenticatedUser);
-             localStorage.setItem("authenticatedUser",JSON.stringify(this.authService.authenticatedUser));
-             this.router.navigateByUrl('/dashboard');
+             this.showPatienter = false;
+             if(rs.etat){
+                this.bloquer = "Votre compte a été bloqué";
+             }else{
+               this.authService.authenticatedUser  = rs;
+               console.log(this.authService.authenticatedUser);
+               localStorage.setItem("authenticatedUser",JSON.stringify(this.authService.authenticatedUser));
+               this.router.navigateByUrl('/dashboard');
+             }
 
            });
 
       },err => {
         let status = err.error.httpCode;
+        this.showPatienter = false;
         if(status == 400 || status == 404){
           this.errorMessage = "Login ou mot de passe incorrect";
           setTimeout(()=>{

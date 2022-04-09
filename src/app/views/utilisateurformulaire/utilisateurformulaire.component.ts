@@ -7,7 +7,6 @@ import {TypeContratService} from "../../services/typeContrat.service";
 import {UtilisateurDto} from "../../dto/UtilisateurDto";
 import {ContratDto} from "../../dto/ContratDto";
 import Swal from "sweetalert2";
-import {TypeContrat} from "../../model/TypeContrat.model";
 
 declare var $:any;
 @Component({
@@ -30,6 +29,7 @@ export class UtilisateurformulaireComponent implements OnInit {
   private imagePath: any;
   private imgURL: string | ArrayBuffer = "../../../assets/icone_file/user.png";
   private messagePhoto: string;
+  showPatienter:boolean = false;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -44,11 +44,12 @@ export class UtilisateurformulaireComponent implements OnInit {
     this.initForm();
     this.loadAllDepartement();
     this.loadAllTypeContrat();
+    $("#formulaire :input").prop("disabled", true);
   }
 
   initForm() {
     this.userForm = this.formBuilder.group({
-        nom: ['',[Validators.required,Validators.minLength(2),Validators.pattern('[a-zA-Z]*')]],
+        nom: ['',[Validators.required]],
         prenom: ['',[Validators.required,Validators.minLength(2),Validators.pattern('[a-zA-Z0-9 ]*')]],
         login: ['', Validators.required,Validators.minLength(8),Validators.pattern('[a-zA-Z0-9]*')],
         // pwd: ['', Validators.required,Validators.min(4)],//pwd= password
@@ -63,7 +64,6 @@ export class UtilisateurformulaireComponent implements OnInit {
         dateDeNaissance: ['',[Validators.required]],
         date_fin: ['',[Validators.required]],
         type_contrat: ['',[Validators.required]],
-        // contrat: ['', Validators.required],
         departement: ['',[Validators.required]],
         adresse: ['',[Validators.required]],
         matricule:['',[Validators.required]],
@@ -101,7 +101,6 @@ export class UtilisateurformulaireComponent implements OnInit {
     utilisateur.sexe = data.sexe;
     utilisateur.salaire = data.salaire;
     utilisateur.cin = data.cin;
-    utilisateur.photo  = "dans le drive";
     utilisateur.situationMatri = data.situationMatri;
     utilisateur.dateEmbauche = data.dateDebutContrat;
 
@@ -114,14 +113,26 @@ export class UtilisateurformulaireComponent implements OnInit {
 
     formulaireData.append('utilisateur', JSON.stringify(utilisateur));
     formulaireData.append('contrat', JSON.stringify(contrat));
-    formulaireData.append('photo', this.photo);
 
+    if(this.photo == ""){
+      formulaireData.append('photo', null);
+
+    }else{
+      formulaireData.append('photo', this.photo);
+    }
+
+
+    $("#formulaire :input").prop("disabled", true);
+    this.showPatienter = true;
     this.utilisateurService.ajouterUtilisateur(formulaireData).subscribe(rsl => {
+      this.showPatienter = false;
       this.alertSuccessUtilisateurCree();
       this.initForm();
     },error =>{
+      this.showPatienter = false;
       console.log(error)
     } )
+    $("#formulaire :input").prop("disabled", false);
 
   }
 

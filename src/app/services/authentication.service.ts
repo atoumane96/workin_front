@@ -25,13 +25,13 @@ export class AuthenticationService {
 
   }
 
-  logout1() {
-    localStorage.removeItem('access_token');
-  }
-
-  public get loggedIn(): boolean{
-    return localStorage.getItem('access_token') !==  null;
-  }
+  // logout1() {
+  //   localStorage.removeItem('access_token');
+  // }
+  //
+  // public get loggedIn(): boolean{
+  //   return localStorage.getItem('access_token') !==  null;
+  // }
 
   // register(login:string, password:string) {
   //
@@ -44,23 +44,23 @@ export class AuthenticationService {
 
   /*****************************************************/
 
-  login1(username:string, password:string){
-    let user;
-    this.users.forEach(u=>{
-      if(u.username===username && u.password===password){
-        user=u;
-      }
-    })
-    if(user){
-      this.authenticated=true;
-      this.authenticatedUser=user;
-      localStorage.setItem("authenticatedUser",JSON.stringify(this.authenticatedUser));
-
-    }
-    else{
-      this.authenticated=false;
-    }
-  }
+  // login1(username:string, password:string){
+  //   let user;
+  //   this.users.forEach(u=>{
+  //     if(u.username===username && u.password===password){
+  //       user=u;
+  //     }
+  //   })
+  //   if(user){
+  //     this.authenticated=true;
+  //     this.authenticatedUser=user;
+  //     localStorage.setItem("authenticatedUser",JSON.stringify(this.authenticatedUser));
+  //
+  //   }
+  //   else{
+  //     this.authenticated=false;
+  //   }
+  // }
 
   loadUser(){
     let user=localStorage.getItem('authenticatedUser');

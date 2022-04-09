@@ -15,7 +15,8 @@ declare var $:any;
   styleUrls: ['./rh.component.css']
 })
 export class RHComponent implements OnInit {
-  bloquerUtilisateur:boolean;
+  choisirDepartement:string = "";
+  formAddTypeArchiveValid:boolean = false;
   champsNomDepartementRequit:string = "";
   champsNomTypeFichierRequit:string = "";
   listeDepartement:Departement[] = [];
@@ -40,22 +41,12 @@ export class RHComponent implements OnInit {
     this.loading();
     $(".tooltipped").tooltip();
     this.loadAllDepartement();
-    this.loadAllUtilisateur();
+    this. loadAllUtilisateur();
     this.loadListeTypeArchive();
 
   }
 
 
-  topend()
-  {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'ajouté avec succes!',
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
 
   creationDepartement(dataForm:Departement){
     let index1;
@@ -103,21 +94,30 @@ export class RHComponent implements OnInit {
   }
 
   creationTypeFichier(dataForm:TypeArchive){
-    console.log(dataForm);
+
     let typeArchiveAdded:TypeArchive;
-    if(dataForm.libelleTypeArchive != ""){
 
-       this.typeArchiveService.ajouterTypeArchive(dataForm).subscribe(value => {
-            typeArchiveAdded = value;
-            this.listeTypeArchive.push(dataForm);
-            this.alertSuccessTypeArchive();
-       },error => {
-         console.log(error)
-       })
-
-    }else {
+    if(dataForm.libelleTypeArchive.trim() == ""){
       this.champsNomTypeFichierRequit = "Ce champs est obligatoire";
+
+    }else if(!dataForm.departement){
+      this.choisirDepartement = "Veillez choisir un département";
+
+    }else{
+
+      if(dataForm.libelleTypeArchive != "" && dataForm.departement){
+        this.formAddTypeArchiveValid = true;
+
+        this.typeArchiveService.ajouterTypeArchive(dataForm).subscribe(value => {
+             typeArchiveAdded = value;
+             this.listeTypeArchive.push(dataForm);
+             this.alertSuccessTypeArchive();
+        },error => {
+          console.log(error)
+        })
+      }
     }
+
 
   }
 
@@ -166,12 +166,14 @@ export class RHComponent implements OnInit {
 
   allertBloquerUtilisateur(email:string){
     Swal.fire({
-      title: 'Voulez Vous vraiment débloqué cet utilisateur ?',
+      title: 'Voulez vous vraiment débloqué cet utilisateur ?',
       icon: 'warning',
       //showDenyButton: true,
       showCancelButton:true,
       confirmButtonText: `Confirmer`,
-      confirmButtonColor:'green'
+      confirmButtonColor:'green',
+      cancelButtonText:  'Annuler',
+      cancelButtonColor : 'red'
       //denyButtonText: `Don't save`,
     }).then((result) => {
       //this.spinnerService.show();
@@ -190,12 +192,14 @@ export class RHComponent implements OnInit {
 
   allertDeBloquerUtilisateur(email:string){
     Swal.fire({
-      title: 'Voulez Vous vraiment bloquer cet utilisateur ?',
+      title: 'Voulez vous vraiment bloquer cet utilisateur ?',
       icon: 'warning',
       //showDenyButton: true,
       showCancelButton:true,
       confirmButtonText: `Confirmer`,
-      confirmButtonColor:'green'
+      confirmButtonColor:'green',
+      cancelButtonText:  'Annuler',
+      cancelButtonColor : 'red'
       //denyButtonText: `Don't save`,
     }).then((result) => {
       //this.spinnerService.show();
@@ -203,7 +207,7 @@ export class RHComponent implements OnInit {
       if (result.isConfirmed) {
         this.utilisateurService.bloquer(email).subscribe(value => {
           this.loadAllUtilisateur();
-          Swal.fire(value.prenom + ' ' + value.nom + ' a été bloqué ! avec success', '', 'success')
+          Swal.fire(value.prenom + ' ' + value.nom + ' a été bloqué avec success!', '', 'success')
         },error => {
           console.log(error)
         })
@@ -243,12 +247,25 @@ export class RHComponent implements OnInit {
     })
   }
 
+
   loadAllUtilisateur(){
     this.utilisateurService.getAllUsers().subscribe(value => {
-       this.listeUtilisateur = value;
+      this.listeUtilisateur = value;
+      console.log(this.listeUtilisateur)
+       this.listeUtilisateur.forEach(user => {
+         if(user.photo == ""){
+
+           user.photo = "../../../assets/icone_file/user.png";
+
+         }else{
+           user.photo = 'data:image/jpeg;base64,' + user.photo;
+         }
+
+       })
     },error => {
       console.log(error)
     })
+
   }
 
   loadListeTypeArchive(){

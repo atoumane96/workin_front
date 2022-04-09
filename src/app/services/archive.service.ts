@@ -34,7 +34,7 @@ export class ArchiveService {
     }
 
     public supprimerArchive(id: number):Observable<any>{
-      return this.http.delete(`${environment.host+this.ressource}/${id}`);
+      return this.http.delete(environment.host + this.ressource + "/delete/"+id);
     }
 
   public uploadFile(file: File): Observable<HttpEvent<{}>> {

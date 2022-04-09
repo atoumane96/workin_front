@@ -23,8 +23,16 @@ export class UtilisateurDetailsComponent implements OnInit {
       .subscribe(params => {
           this.emailUtilisateur = params.email;
           this.utilisateurService.getAllUserByEmail(this.emailUtilisateur).subscribe(value => {
+
             this.utilisateur = value;
-            console.log(value)
+
+            if(this.utilisateur.photo == ""){
+               this.utilisateur.photo = "../../../assets/icone_file/user.png";
+
+            }else {
+               this.utilisateur.photo = 'data:image/jpeg;base64,' + this.utilisateur.photo;
+            }
+
           },error => {
             console.log(error);
           })
@@ -33,7 +41,4 @@ export class UtilisateurDetailsComponent implements OnInit {
 
   }
 
-  onSubmitForm() {
-
-  }
 }

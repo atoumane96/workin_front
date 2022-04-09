@@ -8,7 +8,6 @@ export class UtilisateurDto{
   sexe: string;
   telephone: string;
   matricule: string;
-  photo: string;
   cin: string;
   salaire: number;
   dateEmbauche: Date;

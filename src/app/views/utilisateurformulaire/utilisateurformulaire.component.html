@@ -1,156 +1,247 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <div class="card-panel" style="border-radius: 20px;">
-    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" enctype="multipart/form-data">
+  <div class="card-panel transparent z-depth-4" style="border-radius: 20px; border: 2px solid green">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmitForm()" enctype="multipart/form-data" id="formulaire">
       <div *ngIf="step == 1">
-        <h5>Information personnelles</h5>
+        <div class="pere z-depth-1">
+          <p class="titre-form">Informations personnelles</p>
+        </div>
+
         <div class="row">
-           <div class="col blue-grey darken-4 s12" style="border-radius: 20px;">
-             <div class="input-field col l4">
-               <img [src]="imgURL" alt="kds" class="responsive-img "
+           <div class="col grey lighten-2 s12" style="border-radius: 20px;">
+             <div class="input-field col l4 m4 s12">
+               <img [src]="imgURL" alt="kds" class="responsive-img"
                style="width: 128px; height: 128px;"/>
                <input type="file" formControlName="photo" (change)="onSelectFile($event)">
              </div>
-             <div class="input-field col l4">
-               <i class="material-icons prefix white-text">person</i>
-               <input type="text" id="nom" formControlName="nom" class="white-text" required>
-               <label for="nom" class=" white-text"><span class="red-text">*</span>Nom</label>
+             <div class="input-field col m4 s12 l4">
+               <i class="material-icons prefix black-text">person</i>
+               <input type="text" id="nom" formControlName="nom" class="black-text" required>
+               <label for="nom" class="black-text"><span class="red-text">*</span>Nom</label>
+               <span *ngIf="userForm.get('nom').errors && (userForm.get('nom').touched || userForm.get('nom').dirty)">
+                 <i class="red-text little-text"  *ngIf="userForm.get('nom').errors.required">
+                    Ce champs est obligatoire
+                 </i>
+               </span>
              </div>
-             <div class="input-field col l4">
-               <i class="material-icons prefix white-text">person</i>
-               <input type="text" id="prenom" class="white-text" formControlName="prenom" required>
-               <label for="prenom" class="white-text"><span class="red-text">*</span>Prenom</label>
+             <div class="input-field col m4 s12  l4">
+               <i class="material-icons prefix black-text">person</i>
+               <input type="text" id="prenom" class="black-text" formControlName="prenom" required>
+               <label for="prenom" class="black-text"><span class="red-text">*</span>Prenom</label>
+               <span *ngIf="userForm.get('prenom').errors && (userForm.get('prenom').touched || userForm.get('prenom').dirty)">
+                 <i class="red-text little-text"  *ngIf="userForm.get('prenom').errors.required">
+                    Ce champs est obligatoire
+                 </i>
+                 </span>
              </div>
-             <div class="input-field col s6 center-align" >
+             <div class="input-field col l6 m6 s12 center-align" >
                <div class="col s3">
-                 <p class="white-text"><span class="red-text">*</span>Sexe</p>
+                 <p class="black-text"><span class="red-text">*</span>Sexe</p>
                    <div>
                      <label>
                        <input value="M" formControlName="sexe" type="radio" [attr.checked]="true" (change)="activeNombreFemme=true"/>
-                       <span class="white-text">Homme</span>
+                       <span class="black-text">Homme</span>
                      </label>
                    </div>
                    <div style="margin-top: 15px">
                      <label>
                        <input value="F" formControlName="sexe" type="radio" (change)="activeNombreFemme=null" />
-                       <span class="white-text">Femme</span>
+                       <span class="black-text">Femme</span>
                      </label>
                    </div>
                </div>
-               <div class="col s9">
-                 <p class="white-text right-align" ><span class="red-text">*</span>Situation Matrimoniale</p>
+               <div class="col l6 m6 s9">
+                 <p class="black-text right-align" ><span class="red-text">*</span>Situation Matrimoniale</p>
                    <div class="right-align">
                      <label>
                        <input value="C" formControlName="situationMatri" type="radio" checked />
-                       <span class="white-text">Célibatire</span>
+                       <span class="black-text">Célibatire</span>
                      </label>
                    </div>
                    <div class=" right-align" style="margin-top: 15px">
                      <label>
                        <input  value="M" formControlName="situationMatri" type="radio" />
-                       <span class="white-text">Marié(e)</span>
+                       <span class="black-text">Marié(e)</span>
                      </label>
                    </div>
                </div>
              </div>
-             <div class="input-field col l6" style="margin-top: 30px;">
-               <i class="material-icons prefix white-text">email</i>
-               <input type="text" id="email" class="white-text " formControlName="email">
-               <label for="email"  class="white-text"><span class="red-text">*</span>Email</label>
+             <div class="row">
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <i class="material-icons prefix black-text">email</i>
+                 <input type="text" id="email" class="black-text " formControlName="email">
+                 <label for="email"  class="black-text"><span class="red-text">*</span>Email</label>
+                 <span *ngIf="userForm.get('email').errors && (userForm.get('email').touched || userForm.get('email').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('email').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+               </div>
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <i class="material-icons prefix black-text">phone</i>
+                 <input type="text" id="telephone" class="black-text" formControlName="telephone">
+                 <label for="telephone" class="black-text"><span class="red-text">*</span>Telephone</label>
+                 <span *ngIf="userForm.get('telephone').errors && (userForm.get('telephone').touched || userForm.get('nom').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('telephone').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+               </div>
              </div>
-             <div class="input-field col l6" style="margin-top: 30px;">
-               <i class="material-icons prefix white-text">phone</i>
-               <input type="text" id="telephone" class="white-text" formControlName="telephone">
-               <label for="telephone" class="white-text"><span class="red-text">*</span>Telephone</label>
+             <div class="row">
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <i class="material-icons prefix black-text">people</i>
+                 <input type="number" min="0" value="0" id="nb_enfant" class="black-text" formControlName="nombreEnfant">
+                 <label for="nb_enfant" class="black-text"><span class="red-text">*</span>Enfants</label>
+                 <span *ngIf="userForm.get('nombreEnfant').errors && (userForm.get('nombreEnfant').touched || userForm.get('nombreEnfant').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('nombreEnfant').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+               </div>
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <i class="material-icons prefix black-text">people</i>
+                 <input type="number" min="0" value="0" id="nb_femme" class="white-text" formControlName="nombreFemme" [attr.disabled]="!activeNombreFemme ? true : null">
+                 <label for="nb_femme" class="black-text">Femme(s)</label>
+               </div >
              </div>
-             <div class="input-field col l6" style="margin-top: 30px;">
-               <i class="material-icons prefix white-text">people</i>
-               <input type="number" min="0" value="0" id="nb_enfant" class="white-text" formControlName="nombreEnfant">
-               <label for="nb_enfant" class="white-text"><span class="red-text">*</span>Enfants</label>
+             <div class="row">
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <i class="material-icons prefix black-text">home</i>
+                 <input type="text" id="adresse" class="black-text" formControlName="adresse">
+                 <label for="adresse" class="black-text">Adresse</label>
+               </div>
+               <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                 <input type="date" id="detenaissance" class="black-text" formControlName="dateDeNaissance">
+                 <label for="detenaissance" class="black-text">Date de naissance</label>
+               </div>
              </div>
-             <div class="input-field col l6" style="margin-top: 30px;">
-               <i class="material-icons prefix white-text">people</i>
-               <input type="number" min="0" value="0" id="nb_femme" class="white-text" formControlName="nombreFemme" [attr.disabled]="!activeNombreFemme ? true : null">
-               <label for="nb_femme" class="white-text"><span class="red-text">*</span>Femme(s)</label>
-             </div >
-             <div class="input-field col s6" style="margin-top: 30px;">
-               <i class="material-icons prefix white-text">home</i>
-               <input type="text" id="adresse" class="white-text" formControlName="adresse">
-               <label for="adresse" class="white-text"><span class="red-text">*</span>Adresse</label>
-             </div>
-             <div class="input-field col s6" style="margin-top: 30px;">
-               <input type="date" id="detenaissance" class="white-text" formControlName="dateDeNaissance">
-               <label for="detenaissance" class="white-text"><span class="red-text">*</span>Date de naissance</label>
-             </div>
-             <div class="col s6" style="margin-bottom: 60px"></div>
+             <div class="col l6 m6 s12" style="margin-bottom: 20px"></div>
            </div>
         </div>
       </div>
       <div class="" *ngIf="step == 2">
-        <h5>Information personnelles</h5>
+        <div class="pere z-depth-1">
+          <p class="titre-form">Informations professionnelles</p>
+        </div>
+        <div class="col s12" style="display: flex;justify-content: center" *ngIf="showPatienter">
+          <div class="loading white z-depth-2" style="margin-bottom: 20px; padding: 20px;">
+            <p class="patienter"><b>Veillez patienter ...</b></p>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
         <div class="row">
-          <div class="col blue-grey darken-4 s12" style="border-radius: 20px;">
-            <div class="input-field col l6">
-              <i class="material-icons prefix white-text">code</i>
-              <input type="text" id="matricule" class="white-text" formControlName="matricule">
-              <label for="matricule" class="white-text"><span class="red-text">*</span>Matricule</label>
+          <div class="colgrey lighten-2 s12" style="border-radius: 20px;">
+            <div class="row">
+              <div class="input-field col l6 m6 s12">
+                <i class="material-icons prefix black-text">code</i>
+                <input type="text" id="matricule" class="black-text" formControlName="matricule">
+                <label for="matricule" class="black-text"><span class="red-text">*</span>Matricule</label>
+                <span *ngIf="userForm.get('matricule').errors && (userForm.get('matricule').touched || userForm.get('matricule').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('matricule').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
+              <div class="input-field col l6 m6 s12">
+                <i class="material-icons prefix black-text">paid</i>
+                <input type="number" min="0" id="salaire" value="0" class="black-text" formControlName="salaire">
+                <label for="salaire" class="black-text"><span class="red-text">*</span>Salaire</label>
+                <span *ngIf="userForm.get('salaire').errors && (userForm.get('salaire').touched || userForm.get('salaire').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('salaire').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
             </div>
-            <div class="input-field col l6">
-              <i class="material-icons prefix white-text">paid</i>
-              <input type="number" min="0" id="salaire" value="0" class="white-text" formControlName="salaire">
-              <label for="salaire" class="white-text"><span class="red-text">*</span>Salaire</label>
+            <div class="row">
+              <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                <i class="material-icons prefix black-text">lock</i>
+                <input type="number" id="cni" class="" formControlName="cin">
+                <label for="cni" class="black-text"><span class="red-text">*</span>CNI</label>
+                <span *ngIf="userForm.get('cin').errors && (userForm.get('cin').touched || userForm.get('cin').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('cin').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
+              <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                <input type="date" id="date_embauche" class="black-text" formControlName="dateEmbauche">
+                <label for="date_embauche" class="black-text"><span class="red-text">*</span>Date d'embauche</label>
+
+              </div>
             </div>
-            <div class="input-field col l6" style="margin-top: 35px;">
-              <i class="material-icons prefix white-text">lock</i>
-              <input type="number" id="cni" class="" formControlName="cin">
-              <label for="cni" class="white-text"><span class="red-text">*</span>CNI</label>
+            <div class="row">
+              <div class="input-field col l8 m8 s12" style="margin-top: 10px;">
+                <p class="black-text" style="margin-left: 60px">
+                  <span class="red-text">*</span>Type de contrat</p>
+               <div style="display: flex; flex-direction: row; justify-content: space-around">
+                 <label *ngFor="let type of listeTypeContrat">
+                   <input  [value]="type" formControlName="typeDeContrat" (change)=" type.libelleTypeContrat == 'CDI' ? activeDatefin = true : activeDatefin = null" type="radio"/>
+                   <span class="black-text" >{{type.libelleTypeContrat}}</span>
+                 </label>
+               </div>
+              </div>
             </div>
-            <div class="input-field col l6" style="margin-top: 35px;">
-              <input type="date" id="date_embauche" class="white-text" formControlName="dateEmbauche">
-              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date d'embauche</label>
+            <div class="row">
+              <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                <input type="date" name="dateDebutContrat" formControlName="dateDebutContrat" id="dateDebutContart" class="black-text" >
+                <label for="date_embauche" class="black-text"><span class="red-text">*</span>Date début contrat</label>
+                <span *ngIf="userForm.get('dateDebutContrat').errors && (userForm.get('dateDebutContrat').touched || userForm.get('dateDebutContrat').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('dateDebutContrat').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
+              <div class="input-field col l6 m6 s12" style="margin-top: 10px;"  [attr.hidden]="activeDatefin">
+                <input type="date" name="dateFinContrat"  formControlName="dateFinContrat" id="dateDinContrat" class="black-text" >
+                <label for="date_embauche" class="black-text"><span class="red-text">*</span>Date Fin contrat</label>
+                <span *ngIf="userForm.get('dateFinContrat').errors && (userForm.get('dateFinContrat').touched || userForm.get('dateFinContrat').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('dateFinContrat').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
             </div>
-            <div class="input-field col s8" style="margin-top: 20px;">
-              <p class="white-text" style="margin-left: 60px">
-                <span class="red-text">*</span>Type de contrat</p>
-             <div style="display: flex; flex-direction: row; justify-content: space-around">
-               <label *ngFor="let type of listeTypeContrat">
-                 <input  [value]="type" formControlName="typeDeContrat" (change)="type.libelleTypeContrat == 'CDI'? activeDatefin = true : activeDatefin = null" type="radio" checked/>
-                 <span class="white-text" >{{type.libelleTypeContrat}}</span>
-               </label>
-             </div>
+            <div class="row">
+              <div class="input-field col l6 m6 s12" style="margin-top: 10px;">
+                <label for="departement"></label>
+                <select formControlName="departement" name="departement" id="departement" class="browser-default col l6" style="font-weight: bold;margin-top: 10px;">
+                  <option value="" disabled selected>DEPARTEMENT</option>
+                  <option *ngFor="let departement of listeDepartement" [ngValue]="departement">
+                    {{ departement.nomDepartement }} <i class="black-text fa fa-building-o"></i>
+                  </option>
+                </select>
+                <span *ngIf="userForm.get('departement').errors && (userForm.get('departement').touched || userForm.get('departement').dirty)">
+                   <i class="red-text little-text"  *ngIf="userForm.get('departement').errors.required">
+                      Ce champs est obligatoire
+                   </i>
+                   </span>
+              </div>
             </div>
-            <div class="input-field col l6" style="margin-top: 45px;">
-              <input type="date" name="dateDebutContrat" formControlName="dateDebutContrat" id="dateDebutContart" class="white-text" >
-              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date début contrat</label>
-            </div>
-            <div class="input-field col l6" style="margin-top: 45px;"  [attr.hidden]="activeDatefin">
-              <input type="date" name="dateFinContrat"  formControlName="dateFinContrat" id="dateDinContrat" class="white-text" >
-              <label for="date_embauche" class="white-text"><span class="red-text">*</span>Date Fin contrat</label>
-            </div>
-            <div class="input-field col l6" style="margin-bottom: 50px;margin-top: 30px;">
-              <label for="departement"></label>
-              <select formControlName="departement" name="departement" id="departement" class="browser-default col l6" style="font-weight: bold;margin-top: 10px;">
-                <option value="" disabled selected>DEPARTEMENT</option>
-                <option *ngFor="let departement of listeDepartement" [ngValue]="departement">
-                 {{ departement.nomDepartement }} <i class="black-text fa fa-building-o"></i>
-                </option>
-              </select>
-            </div>
-            <div class="col s6" style="margin-bottom: 60px"></div>
+            <div class="col l6 m6 s12"></div>
           </div>
         </div>
       </div>
-      <div class="center" style="margin-top: 15px;">
+      <div class="center">
         <button  (click)="onPrevious()" type="button"
-                 *ngIf="step != 1" class="btn green waves-effect" style="border-radius: 100px;">
+                 *ngIf="step != 1" class="btn grey darken-4 waves-effect" style="border-radius: 100px;">
           <i class="material-icons left">chevron_left</i>
           PRECEDENT
         </button>
-        <button (click)="onNext()" type="submit" *ngIf="step < 2" class="btn darken-4 green waves-effect" style="border-radius:100px;margin-left:10px;">
+        <button (click)="onNext()" type="submit" *ngIf="step < 2" class="btn grey darken-4 waves-effect" style="border-radius:100px;margin-left:10px;">
           <i class="material-icons right">chevron_right</i>
           SUIVANT
         </button>
-        <button type="submit" *ngIf="step == 2" class="btn green waves-effect pulse"  style="border-radius:100px;margin-left:10px;">
+        <button type="submit" *ngIf="step == 2" class="btn green darken-4  waves-effect pulse"  style="border-radius:100px;margin-left:10px;">
           <i class="material-icons right">save</i>
           VALIDER
         </button>

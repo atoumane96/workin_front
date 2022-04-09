@@ -75,3 +75,18 @@
   margin-top: 20px;
 }
 
+
+
+.patienter {
+  color: black;
+  margin: 0;
+  font: .8em verdana;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.active-input{
+ background-color:rgba(109, 253, 93, 0.41);
+ border-radius: 20px;
+  height: 47px;
+}

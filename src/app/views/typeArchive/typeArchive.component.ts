@@ -143,7 +143,7 @@ AfficherFormulaire(){
 
 
   loadListeTypeArchive(){
-    this.typeArchiveService.getAllTypeArchive().subscribe(rsl=>{
+    this.typeArchiveService.getAllTypeArchiveByDepartement().subscribe(rsl=>{
       this.listTypeArchive = rsl;
       // console.log(this.listTypeArchive);
     },error => {

@@ -1,11 +1,9 @@
  <nav>
     <div class="container">
         <div class="nav-wrapper">
-          <div>
+          <div class="s12 m12 l12 xl12">
             <a routerLink="/dashboard" class="brand-logo center">
-              <i class="green-text" style="font-family: papyrus,serif; font-weight: bold; font-size: larger;">
-                Work<span class="yellow-text">-In-</span><span class="red-text">22</span>
-              </i>
+              <img src="../../../assets/icone_file/logo.png " alt="logo" style="height: 65px;" />
             </a>
             <ul  class="right hide-on-med-and-down">
               <li>
@@ -22,16 +20,19 @@
             <ul id="mobile-nav" class="sidenav">
                 <li>
                   <div class="user-view  darken-4 z-depth-1" style="background: #01170c">
-                    <img src="../../../assets/icone_file/logo.png" style="width: 150px;"/>
-                    <img src="../../../assets/image/USERICONS4.png" width="100px" class="responsive-img"  alt="" srcset="">
-                      <span class="name">
-                         {{ prenom }} {{ nom }}
-                      </span>
-                       <a href="">
-                           <span class="email">
-                              {{ email }}
-                           </span>
-                       </a>
+                    <div>
+                      <span class="right green-text"><i class="fa fa-circle"></i> en ligne</span>
+                    </div>
+                      <div class="col s12">
+                        <img [src]="utilisateur.photo" style="width: 95px; height: 95px;" class="center-block responsive-img circle" alt="">
+                      </div>
+                      <div class="col s8">
+                         <span class="nom text-center">{{ utilisateur.prenom }} {{ utilisateur.nom | uppercase}} </span>
+                        <br/>
+                        Matricule : <span class="green-text">{{utilisateur.matricule}}</span>
+                        <br/>
+                        Département : <span class="green-text">{{utilisateur.departement.nomDepartement}}</span>
+                      </div>
                   </div>
                  </li>
                  <li>
@@ -46,7 +47,7 @@
                        Gestion d'archives
                    </a>
                    </li>
-                 <li *ngIf="departement == 'RH' ">
+                 <li *ngIf="utilisateur.departement.nomDepartement == 'RH' ">
                      <a href="" class="white-text hoverable" routerLink="/rh">
                          <i class="material-icons white-text">filter_hdr</i>
                          Gestion RH
@@ -58,12 +59,7 @@
                          Administration
                      </a>
                    </li>
-                   <li>
-                    <a href="" class="white-text hoverable" routerLink="/info" >
-                        <i class="material-icons white-text">info</i>
-                        Information
-                    </a>
-                  </li>
+
                 <li>
                    <a class="supheader white-text hoverable" routerLink="/parametre">
                        <i class="material-icons white-text">settings</i>

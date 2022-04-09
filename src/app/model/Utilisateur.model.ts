@@ -8,7 +8,6 @@ export interface Utilisateur{
     sexe: string;
     telephone: string;
     matricule: string;
-    photo: string;
     cin: string;
     salaire: number;
     dateEmbauche: Date;
@@ -18,6 +17,7 @@ export interface Utilisateur{
     motDePasse: string;
     adresse: string;
     email: string;
+    photo:any;
     departement: Departement;
     etat: boolean;
 

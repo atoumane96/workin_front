@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Utilisateur } from '../model/Utilisateur.model';
 import {TypeArchive} from "../model/TypeArchive.model";
+import {AuthenticationService} from "./authentication.service";
 
 
 @Injectable({
@@ -12,12 +13,17 @@ import {TypeArchive} from "../model/TypeArchive.model";
 export class TypeArchiveService {
 
     ressource="/typearchive";
-    constructor(private http:HttpClient) {
+    constructor(private http:HttpClient,
+                private auth:AuthenticationService) {
     }
 
     public getAllTypeArchive():Observable<TypeArchive[]>{
       return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/all");
     }
+
+  public getAllTypeArchiveByDepartement():Observable<TypeArchive[]>{
+    return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/departement/"+this.auth.authenticatedUser.departement.nomDepartement);
+  }
 
     public ajouterTypeArchive(utilisateur: Utilisateur):Observable<Utilisateur>{
       return this.http.post<Utilisateur>(environment.host+this.ressource,utilisateur);

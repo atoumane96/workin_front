@@ -12,7 +12,7 @@
   <div class="row">
     <a routerLink="/nature"
        [queryParams]="{ dossier: dossier.nomDossier,typeArchive: dossier.typeArchive.libelleTypeArchive }"
-       class="col s2 tab card-panel transparent hoverable center-align"
+       class="col s12 m2 l2 tab card-panel transparent hoverable center-align"
        *ngFor="let dossier of listeDossier let i = index">
       <img src="../assets/icone_file/calendrier.png" alt="aezr"/>
       <h5 id="Tab" class="grey-text text-darken-4 active"

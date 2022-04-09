@@ -61,6 +61,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path:'departement',
+    component:DepartementComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path:'dashboard',
     component:NdashioComponent,
     canActivate: [AuthGuard],

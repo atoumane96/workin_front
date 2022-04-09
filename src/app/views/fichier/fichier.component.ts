@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ArchiveService} from "../../services/archive.service";
+import Swal from "sweetalert2";
 declare var $ :any
 
 @Component({
@@ -11,6 +12,7 @@ declare var $ :any
 export class FichierComponent implements OnInit {
 
   listeFichier:any = [];
+  extensions:any = ['pdf','png','jpg'];
   nomTypeArchive:string;
   nomDossier:string;
   natureArchive:string;
@@ -22,18 +24,26 @@ export class FichierComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => {
-          this.getAllArchiveByDossierTypeArchiveNature(params.dossier+'',
-                                                       params.typeArchive+'',
-                                                       params.nature+'');
-          this.nomDossier = params.dossier+'';
-          this.nomTypeArchive = params.typeArchive+''
-          this.natureArchive =  params.nature+'';
-        }
-      );
+   this.loadListeFichier();
     $(".tooltipped").tooltip();
   }
+
+
+
+loadListeFichier(){
+  this.route.queryParams
+    .subscribe(params => {
+        this.getAllArchiveByDossierTypeArchiveNature(params.dossier+'',
+          params.typeArchive+'',
+          params.nature+'');
+        this.nomDossier = params.dossier+'';
+        this.nomTypeArchive = params.typeArchive+''
+        this.natureArchive =  params.nature+'';
+      }
+    );
+
+}
+
 
 
   getAllArchiveByDossierTypeArchiveNature(dossier:string,typeArchive:string,nature:string){
@@ -72,6 +82,31 @@ export class FichierComponent implements OnInit {
   // }
 
 
+  allertSupprimerFichier(id:number){
+    Swal.fire({
+      title: 'Voulez vous vraiment supprimer ce fichier ?',
+      icon: 'warning',
+      //showDenyButton: true,
+      showCancelButton:true,
+      confirmButtonText: `Confirmer`,
+      confirmButtonColor:'green',
+      cancelButtonText:  'Annuler',
+      cancelButtonColor : 'red'
+      //denyButtonText: `Don't save`,
+    }).then((result) => {
+      //this.spinnerService.show();
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.archiveService.supprimerArchive(id).subscribe(value => {
+          this.loadListeFichier();
+          Swal.fire('le fichier a été supprimé avec success', '', 'success')
+        },error => {
+          console.log(error)
+        })
+
+      }
+    })
+  }
 }
 
 

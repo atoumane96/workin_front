@@ -1,9 +1,12 @@
 
 import {Nature} from "../model/Nature.model";
+import {Utilisateur} from "../model/Utilisateur.model";
 
 export class ArchiveDto{
 
-   nomFichier: String;
+   nomFichier: string;
+   extension:string;
+   utilisateur:Utilisateur;
    nature:Nature;
 
 

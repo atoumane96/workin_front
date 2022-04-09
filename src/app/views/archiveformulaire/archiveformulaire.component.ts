@@ -11,6 +11,7 @@ import {Nature} from "../../model/Nature.model";
 import {NatureService} from "../../services/nature.service";
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 declare var $: any
@@ -24,14 +25,15 @@ declare var $: any
 
 export class ArchiveformulaireComponent implements OnInit {
   nomFichier:string = "";
+  showPatienter:boolean = false;
   activeTypeFichier:boolean = false;
   activeEmplacement:boolean = false;
   activeNatureFichier:boolean = false;
   activeNomFcihier:boolean = false;
   activeButtonValidation: boolean = false;
-
+  extension:string="";
   listeNature: any = [];
-  fileURL: any = "../../../assets/icone_file/95083-file-search.gif";
+  fileURL: any = "../../../assets/icone_file/selecte.gif";
   fichier: any;
   optionNature: any;
   optionEmplacement: any;
@@ -50,7 +52,8 @@ export class ArchiveformulaireComponent implements OnInit {
               private dossierService: DossierService,
               private formBuilder: FormBuilder,
               private natureService: NatureService,
-              private router: Router) {
+              private router: Router,
+              private auth:AuthenticationService) {
   }
 
   ngOnInit() {
@@ -63,17 +66,18 @@ export class ArchiveformulaireComponent implements OnInit {
 
 
   onSelectFile(event) {
-    console.log("nature " + this.nomNatureArchive + " dossier " + this.nomDossier + " type archive = " + this.nomTypeArchive)
+
     if (event.target.files.length > 0) {
 
       const file = event.target.files[0];
       this.fichier = file;
       // this.f['profile'].setValue(file);
 
-      const mimeType = event.target.files[0].type;
+       const mimeType = event.target.files[0].type;
        this.nomFichier = event.target.files[0].name;
-      const re = /(?:\.([^.]+))?$/;
-      var extension = re.exec(this.nomFichier)[1];
+       const re = /(?:\.([^.]+))?$/;
+       var extension = re.exec(this.nomFichier)[1];
+       this.extension = extension;
 
       if (mimeType.match('text.*|image.*|application.*') == null) {
         return;
@@ -88,7 +92,7 @@ export class ArchiveformulaireComponent implements OnInit {
         this.fileURL = "../assets/icone_file/word.png";
 
       } else if (extension == "pptx") {
-        this.fileURL = "../assets/icone_file/power.png";
+        this.fileURL = "../assets/icone_file/power%20.png";
 
       } else if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif") {
         var reader = new FileReader();
@@ -144,18 +148,20 @@ export class ArchiveformulaireComponent implements OnInit {
 
     let archiveDto = new ArchiveDto();
     archiveDto.nomFichier = archive.nomFichier;
-
-
     archiveDto.nature = natureAjout;
     archiveDto.nature.dossier = dossierAjout;
+    archiveDto.utilisateur = this.auth.authenticatedUser;
+    archiveDto.extension = this.extension;
 
     if (archiveDto.nature.libelleNature != 'Autre' && archiveDto.nature.dossier.nomDossier != 'Autre'){
         formData.append('archive', JSON.stringify(archiveDto));
         formData.append('fichier', this.fichier);
 
       let archiveAdded:Archive;
+      this.showPatienter = true;
       this.archiveService.ajouterArchive(formData).subscribe(data => {
         archiveAdded = data;
+        this.showPatienter = false;
         this.alertArchiveAdded();
         window.location.href = '/fichier?nature=' + archiveAdded.nature.libelleNature +
           '&dossier=' + archiveAdded.nature.dossier.nomDossier +
@@ -175,7 +181,7 @@ export class ArchiveformulaireComponent implements OnInit {
 
 
   loadListeTypeArchive() {
-    this.typeArchiveService.getAllTypeArchive().subscribe(rsl => {
+    this.typeArchiveService.getAllTypeArchiveByDepartement().subscribe(rsl => {
       this.listeTypeArchive = rsl;
     }, error => {
       console.log(error)
@@ -295,8 +301,8 @@ export class ArchiveformulaireComponent implements OnInit {
       icon: 'success',
       title: 'Fichier archivé avec succes!',
       showConfirmButton: true,
-      confirmButtonColor:'green'
-      //timer: 1500
+      confirmButtonColor:'green',
+      timer: 3000
     })
   }
 

@@ -9,8 +9,9 @@
 <div class="container section">
 
   <div class="row">
-    <a *ngFor="let tpArchive of listTypeArchive let i = index" [queryParams]="{ type: tpArchive.libelleTypeArchive}"
-       class="col s3 tab card-panel transparent hoverable center-align"
+    <a *ngFor="let tpArchive of listTypeArchive let i = index"
+       [queryParams]="{ type: tpArchive.libelleTypeArchive}"
+       class="col s12 m3 l3 tab card-panel transparent hoverable center-align"
        routerLink="/dossier">
       <img src="../assets/icone_file/folder.png"/>
       <p class="grey-text text-darken-4 active" id="Tab"

@@ -15,7 +15,7 @@
     <a routerLink="/fichier" [queryParams]="{ nature: nature.libelleNature ,
                                               dossier: nature.dossier.nomDossier,
                                               typeArchive:nature.dossier.typeArchive.libelleTypeArchive }"
-       class="col s2 tab card-panel transparent hoverable center-align"
+       class="col s12 m2 l2 tab card-panel transparent hoverable center-align"
        *ngFor="let nature of listeNature let i = index">
       <img src="../assets/icone_file/greenfold.png" alt="aezr"/>
       <h5 id="Tab" class="grey-text text-darken-4 active"

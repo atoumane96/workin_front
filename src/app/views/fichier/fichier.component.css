@@ -1,2 +1,12 @@
 
 @import "../../breadcumb.css";
+
+.little-text{
+  font-size: 13px;
+}
+
+.titre-info{
+  font-size: 15px;
+  font-weight: bold;
+  color: green;
+}

@@ -11,6 +11,7 @@ export interface Archive{
     nomFichier: string;
     etatFichier: boolean;
     urlFichier: string;
+    extension:string;
     utilisateur: Utilisateur;
     // dossier: Dossier;
     nature:Nature;

@@ -1,12 +1,18 @@
 nav {
   background: rgb(6,6,6);
   background: linear-gradient(90deg, rgba(6,6,6,1) 4%, rgba(42,100,50,1) 41%, rgba(0,0,1,1) 94%);
-  height: 80px;
+  height:  60px;
 }
+
 .sidenav {
   background:  #022a17;
 }
+
 .white-text.hoverable:hover {
   background: rgba(255,255,255,0.5);
   border-radius: 100px;
+}
+
+.nom{
+  font-size: 18px;
 }
