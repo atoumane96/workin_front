@@ -1,7 +1,7 @@
 import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2'
 import {ArchiveService} from "../../services/archive.service";
 import {TypeArchive} from "../../model/TypeArchive.model";
@@ -17,18 +17,25 @@ export class TypeArchiveComponent implements OnInit {
   tabArchive = [];
   archiveForm:FormGroup;
   listTypeArchive:TypeArchive[] = [];
-
+  departement:string;
   constructor(private router:Router,
               private formbuilder:FormBuilder,
-              private typeArchiveService:TypeArchiveService) { }
+              private typeArchiveService:TypeArchiveService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initForm();
     this.loading();
     this.MyjsFunction();
     this.AfficherFormulaire();
-    this.loadListeTypeArchive();
+    //this.loadListeTypeArchive();
 
+    this.route.queryParams
+      .subscribe(params => {
+          this.departement = params.departement+"";
+         this.loadListeTypeArchive(params.departement+"");
+        }
+      );
 
   }
 
@@ -142,8 +149,8 @@ AfficherFormulaire(){
  }
 
 
-  loadListeTypeArchive(){
-    this.typeArchiveService.getAllTypeArchiveByDepartement().subscribe(rsl=>{
+  loadListeTypeArchive(nomDepartement:string){
+      this.typeArchiveService.getAllTypeArchiveByDepartement(nomDepartement).subscribe(rsl=>{
       this.listTypeArchive = rsl;
       // console.log(this.listTypeArchive);
     },error => {

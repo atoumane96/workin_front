@@ -7,6 +7,8 @@ import {TypeContratService} from "../../services/typeContrat.service";
 import {UtilisateurDto} from "../../dto/UtilisateurDto";
 import {ContratDto} from "../../dto/ContratDto";
 import Swal from "sweetalert2";
+import {Router} from "@angular/router";
+import {Utilisateur} from "../../model/Utilisateur.model";
 
 declare var $:any;
 @Component({
@@ -18,24 +20,27 @@ declare var $:any;
 export class UtilisateurformulaireComponent implements OnInit {
   step:any=1;
   private emailUtilisateurCree:string;
+  private listeUtilisateur:Utilisateur[] = [];
+  private imagePath: any;
+  private imgURL: string | ArrayBuffer = "../../../assets/icone_file/user.png";
+  private messagePhoto: string;
+  private message: string;
   activeNombreFemme:boolean = false;
   listeDepartement:Departement[] = [];
   listeTypeContrat:any = [];
   userForm: FormGroup;
   submitted = false;
-  validiterForm=false;
   photo:any = "";
   activeDatefin:boolean = null;
-  private imagePath: any;
-  private imgURL: string | ArrayBuffer = "../../../assets/icone_file/user.png";
-  private messagePhoto: string;
   showPatienter:boolean = false;
+
 
 
   constructor(private formBuilder: FormBuilder,
               private departementService:DepartementService,
               private utilisateurService:UtilisateurService,
-              private typeContratService:TypeContratService) {
+              private typeContratService:TypeContratService,
+              private route:Router) {
 
   }
 
@@ -44,8 +49,10 @@ export class UtilisateurformulaireComponent implements OnInit {
     this.initForm();
     this.loadAllDepartement();
     this.loadAllTypeContrat();
+    this.loadListeUtilisateur();
     $("#formulaire :input").prop("disabled", true);
   }
+
 
   initForm() {
     this.userForm = this.formBuilder.group({
@@ -111,30 +118,35 @@ export class UtilisateurformulaireComponent implements OnInit {
     contrat.utilisateur = null;
     this.emailUtilisateurCree = data.email;
 
-    formulaireData.append('utilisateur', JSON.stringify(utilisateur));
-    formulaireData.append('contrat', JSON.stringify(contrat));
+    if ( this.verifierUtilisateur(utilisateur,this.photo) ){
 
-    if(this.photo == ""){
-      formulaireData.append('photo', null);
+      if ( !this.verifierMatricule(utilisateur.matricule ) ){
 
-    }else{
-      formulaireData.append('photo', this.photo);
+        if ( !this.verifierCin(utilisateur.cin ) ){
+            formulaireData.append('utilisateur', JSON.stringify(utilisateur));
+            formulaireData.append('contrat', JSON.stringify(contrat));
+            formulaireData.append('photo', this.photo);
+
+            $("#formulaire :input").prop("disabled", true);
+
+            this.showPatienter = true;
+            this.utilisateurService.ajouterUtilisateur(formulaireData).subscribe(rsl => {
+              this.showPatienter = false;
+              this.alertSuccessUtilisateurCree();
+              this.initForm();
+              this.route.navigate(["/rh"]);
+            },error =>{
+              this.showPatienter = false;
+              console.log(error)
+            } )
+            $("#formulaire :input").prop("disabled", false);
+
+        }
+      }
     }
 
-
-    $("#formulaire :input").prop("disabled", true);
-    this.showPatienter = true;
-    this.utilisateurService.ajouterUtilisateur(formulaireData).subscribe(rsl => {
-      this.showPatienter = false;
-      this.alertSuccessUtilisateurCree();
-      this.initForm();
-    },error =>{
-      this.showPatienter = false;
-      console.log(error)
-    } )
-    $("#formulaire :input").prop("disabled", false);
-
   }
+
 
   onNext(){
     this.step= this.step + 1;
@@ -190,6 +202,12 @@ export class UtilisateurformulaireComponent implements OnInit {
     })
   }
 
+  loadListeUtilisateur(){
+    this.utilisateurService.getAllUsers().subscribe(value => {
+      this.listeUtilisateur = value;
+    })
+  }
+
   onSelectFile(event) {
     if (event.target.files.length > 0)
     {
@@ -214,28 +232,145 @@ export class UtilisateurformulaireComponent implements OnInit {
     }
   }
 
-
   alertSuccessUtilisateurCree() {
     Swal.fire({
       position: 'center',
       icon: 'success',
       title: 'Utilisateur créé avecsuccess!'
             + '<br><br>'
-            +'<p>Email : ' + this.emailUtilisateurCree + '</p>'
-            +'<p>Mot de passe : passer </p>',
+            +'<label>Email : ' + this.emailUtilisateurCree + '</label>'
+            +'<label>Mot de passe : passer </label>',
       showConfirmButton: true,
       confirmButtonColor:'green'
       //timer: 1500
     })
   }
 
+   alertError() {
+    Swal.fire({
+      position: 'center',
+      icon: 'error',
+      title: this.message,
+      showConfirmButton: true,
+      confirmButtonColor:'red'
+      //timer: 1500
+    })
+  }
 
+  private verifierUtilisateur(user:UtilisateurDto,photo:any):boolean{
 
+    let correct:boolean = true;
+    if(user.nom == "" || user.prenom == ""){
+       this.message = "Vérifier le nom ou prénom";
+       correct = false;
+       this.alertError();
+    }
 
+    if(user.sexe == ""){
+      this.message = "Vous avez oublier de choisir le sexe";
+      correct = false;
+      this.alertError();
+    }
 
+    if(!user.nombreEnfant){
+      this.message = "Vous avez oublier de mentionner le nombre d'enfant";
+      correct = false;
+      this.alertError();
+    }
 
+    if(user.telephone == ""){
+      this.message = "Vous avez oublier de mentionner le numéro de téléphone";
+      correct = false;
+      this.alertError();
+    }
 
+    if(user.situationMatri == ""){
+      this.message = "Vous avez oublier de choisir la situation matrimoniale";
+      correct = false;
+      this.alertError();
+    }
 
+    if(user.adresse == ""){
+      this.message = "Vous avez oublier de choisir l'adresse";
+      correct = false;
+      this.alertError();
+    }
+
+    if(!user.departement){
+      this.message = "Vous avez oublier de choisir un département";
+      correct = false;
+      this.alertError();
+    }
+
+    if(user.matricule == ""){
+      this.message = "Vous avez oublier de choisir de mentionner la matricule";
+      correct = false;
+      this.alertError();
+    }
+
+    if(!user.dateDeNaissance){
+      this.message = "Vous avez oublier de mentionner la date de naissance";
+      correct = false;
+      this.alertError();
+    }
+
+    if(!user.salaire){
+      this.message = "Vous avez oublier de choisir de mentionner le salaire";
+      correct = false;
+      this.alertError();
+    }
+
+    if(user.cin == ""){
+      this.message = "Vous avez oublier de choisir de mentionner le numéro de carte d'identité";
+      correct = false;
+      this.alertError();
+    }
+
+    if(!user.dateEmbauche){
+      this.message = "Vous avez oublier de choisir de mentionner la date d'embauche";
+      correct = false;
+      this.alertError();
+    }
+
+    if(photo==""){
+      this.message = "Vous avez oublier de choisir une photo de profil";
+      correct = false;
+      this.alertError();
+    }
+    return correct;
+}
+
+  private verifierMatricule(matricule:string):boolean{
+    let existe:boolean = false;
+
+    for(let i = 0; i < this.listeUtilisateur.length; i++){
+      if (matricule == this.listeUtilisateur[i].matricule){
+          existe = true;
+      }
+    }
+    if(existe){
+      this.message = "Cette matricule existe déja !!";
+      this.alertError();
+    }
+
+    return existe;
+  }
+
+  private verifierCin(cin:string):boolean{
+    let existe:boolean = false;
+
+    for(let i=0; i < this.listeUtilisateur.length; i++){
+      if (cin == this.listeUtilisateur[i].cin){
+          existe = true;
+      }
+    }
+    if(existe){
+      this.message = "Cette numéro de carte d'identité existe déja !!";
+      this.alertError();
+    }
+
+    return existe;
+  }
 
 
 }

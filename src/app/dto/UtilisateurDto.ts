@@ -19,5 +19,6 @@ export class UtilisateurDto{
   email: string;
   departement: Departement;
   etat: boolean;
+  photo:any;
 
 }

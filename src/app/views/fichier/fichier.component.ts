@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ArchiveService} from "../../services/archive.service";
 import Swal from "sweetalert2";
+import {Archive} from "../../model/Archive.model";
+import {Departement} from "../../model/Departement.model";
+import {AuthenticationService} from "../../services/authentication.service";
 declare var $ :any
 
 @Component({
@@ -12,20 +15,26 @@ declare var $ :any
 export class FichierComponent implements OnInit {
 
   listeFichier:any = [];
-  extensions:any = ['pdf','png','jpg'];
   nomTypeArchive:string;
   nomDossier:string;
   natureArchive:string;
+  departement:Departement;
   dossier:String;
   type:String;
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private archiveService:ArchiveService) { }
+              private archiveService:ArchiveService,
+              private auth:AuthenticationService) { }
 
 
   ngOnInit() {
+    this.departement = this.auth.authenticatedUser.departement;
    this.loadListeFichier();
     $(".tooltipped").tooltip();
+      // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').modal();
+
+
   }
 
 
@@ -56,6 +65,28 @@ loadListeFichier(){
 
   }
 
+
+  alertInfoArchive(id:number) {
+    const fichierInfo = this.listeFichier[id];
+    Swal.fire({
+      position: 'center',
+      title: '<span class="blue-grey-text">Informations du fichier</span>   <a class="right" href="#"><i class="fa fa-pencil-square"></i></a><br/><br/>'+
+             '<b style="font-size: 18px;">Numero : </b>'+'<span style="font-size: 18px;color: black">'+fichierInfo.numeroArchivage+'</span><br/>'+
+             '<b style="font-size: 18px;">Titre  : </b>'+'<span style="font-size: 18px;color: black">'+fichierInfo.nomFichier+'</label><br/>'+
+             '<b style="font-size: 18px;">Nature : </b>'+'<span style="font-size: 18px;color: black">'+fichierInfo.nature.libelleNature+'</label><br/>'+
+             '<b style="font-size: 18px;">Date : </b>'+'<span style="font-size: 18px;color: black">'+new Date(fichierInfo.dateArchivage).toLocaleDateString('fr')
+                                                                                                    +' a '+new Date(fichierInfo.dateArchivage).toLocaleTimeString('fr')+'</label><br/>'+
+             '<b style="font-size: 18px;">Extension :  </b>'+'<span style="font-size: 18px;color: black">'+fichierInfo.extension+'</label><br/>',
+
+      text:'',
+      showConfirmButton: true,
+      confirmButtonText: "D'accord",
+      confirmButtonColor:'#0896C9'
+      //timer: 1500
+    })
+  }
+
+
   //
   // filerData(val) {
   //   if (val) {
@@ -82,7 +113,7 @@ loadListeFichier(){
   // }
 
 
-  allertSupprimerFichier(id:number){
+  allertSupprimerFichier(id:number,index){
     Swal.fire({
       title: 'Voulez vous vraiment supprimer ce fichier ?',
       icon: 'warning',
@@ -97,8 +128,8 @@ loadListeFichier(){
       //this.spinnerService.show();
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        this.listeFichier.splice(index,1);
         this.archiveService.supprimerArchive(id).subscribe(value => {
-          this.loadListeFichier();
           Swal.fire('le fichier a été supprimé avec success', '', 'success')
         },error => {
           console.log(error)

@@ -21,9 +21,13 @@ export class TypeArchiveService {
       return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/all");
     }
 
-  public getAllTypeArchiveByDepartement():Observable<TypeArchive[]>{
-    return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/departement/"+this.auth.authenticatedUser.departement.nomDepartement);
+  public getAllTypeArchiveByDepartement(nomDepartement:string):Observable<TypeArchive[]>{
+    return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/departement/"+nomDepartement);
   }
+  //
+  // public getAllTypeArchiveByDepartementForAdmin(nomDepartement:string):Observable<TypeArchive[]>{
+  //   return this.http.get<TypeArchive[]>(environment.host + this.ressource + "/departement/"+nomDepartement);
+  // }
 
     public ajouterTypeArchive(utilisateur: Utilisateur):Observable<Utilisateur>{
       return this.http.post<Utilisateur>(environment.host+this.ressource,utilisateur);

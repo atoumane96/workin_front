@@ -24,12 +24,12 @@ body {
 .breadcrumbs li {
   background-color: darkgreen;
   border-radius: 5px 50px 50px 5px;
-  box-shadow: 3px 0 10px black;
+  box-shadow: 3px 0 10px whitesmoke;
   color: #fff;
   display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
-  padding: 12px 30px;
+  padding: 6px 15px;
   position: relative;
   text-transform: uppercase;
 }

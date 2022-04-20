@@ -25,6 +25,7 @@ import {FichierComponent} from "./views/fichier/fichier.component";
 import {UtilisateurformulaireComponent} from "./views/utilisateurformulaire/utilisateurformulaire.component";
 import { UtilisateurDetailsComponent } from './views/utilisateur-details/utilisateur-details.component';
 import { ContratsComponent } from './views/contrats/contrats.component';
+import { LoadingComponent } from './views/loading/loading.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { ContratsComponent } from './views/contrats/contrats.component';
     UtilisateurformulaireComponent,
     UtilisateurDetailsComponent,
     ContratsComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

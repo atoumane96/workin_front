@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.myJsFunctionality();
     this.utilisateur = this.authService.authenticatedUser;
-    console.log("-->"+this.utilisateur.photo)
     if(this.utilisateur.photo == ""){
 
       this.utilisateur.photo = "../../../assets/icone_file/user.png";

@@ -150,10 +150,11 @@ export class ArchiveformulaireComponent implements OnInit {
     archiveDto.nomFichier = archive.nomFichier;
     archiveDto.nature = natureAjout;
     archiveDto.nature.dossier = dossierAjout;
-    archiveDto.utilisateur = this.auth.authenticatedUser;
+    archiveDto.idUser = this.auth.authenticatedUser.id;
+
     archiveDto.extension = this.extension;
 
-    if (archiveDto.nature.libelleNature != 'Autre' && archiveDto.nature.dossier.nomDossier != 'Autre'){
+    if ( archiveDto.nature.libelleNature != 'Autre' && archiveDto.nature.dossier.nomDossier != 'Autre' ){
         formData.append('archive', JSON.stringify(archiveDto));
         formData.append('fichier', this.fichier);
 
@@ -181,7 +182,7 @@ export class ArchiveformulaireComponent implements OnInit {
 
 
   loadListeTypeArchive() {
-    this.typeArchiveService.getAllTypeArchiveByDepartement().subscribe(rsl => {
+    this.typeArchiveService.getAllTypeArchiveByDepartement(this.auth.authenticatedUser.departement.nomDepartement).subscribe(rsl => {
       this.listeTypeArchive = rsl;
     }, error => {
       console.log(error)
@@ -310,7 +311,7 @@ export class ArchiveformulaireComponent implements OnInit {
     Swal.fire({
       position: 'center',
       icon: 'error',
-      title: 'Veillez choisir un emplacement et la nature du fichier!',
+      title: "Une erreur est survenue lors de l'archivage!",
       showConfirmButton: true,
       confirmButtonColor:'danger'
       //timer: 1500

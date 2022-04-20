@@ -28,6 +28,7 @@ export class RHComponent implements OnInit {
   isUpdate=false;
   currentIndex:any;
   statutButton="Valider"
+  showPatienter: boolean = false;
 
   constructor(private departementService:DepartementService,
               private utilisateurService:UtilisateurService,
@@ -40,8 +41,9 @@ export class RHComponent implements OnInit {
     this.MyjsFunction();
     this.loading();
     $(".tooltipped").tooltip();
+    $('.modal').modal();
     this.loadAllDepartement();
-    this. loadAllUtilisateur();
+    this.loadAllUtilisateur();
     this.loadListeTypeArchive();
 
   }
@@ -51,7 +53,7 @@ export class RHComponent implements OnInit {
   creationDepartement(dataForm:Departement){
     let index1;
     let departement:Departement;
-    console.log(dataForm)
+
     if(dataForm.nomDepartement != ""){
       if (  this.isUpdate == false) {
         this.statutButton="Valider"
@@ -242,25 +244,29 @@ export class RHComponent implements OnInit {
 
 
   loadAllDepartement(){
+    this.showPatienter = true;
     this.departementService.getAllDepartement().subscribe(value => {
       this.listeDepartement = value;
+      this.showPatienter = false;
     })
   }
 
 
   loadAllUtilisateur(){
+    this.showPatienter = true;
     this.utilisateurService.getAllUsers().subscribe(value => {
-      this.listeUtilisateur = value;
-      console.log(this.listeUtilisateur)
-       this.listeUtilisateur.forEach(user => {
-         if(user.photo == ""){
+         this.listeUtilisateur = value;
+         this.showPatienter = false;
+         this.listeUtilisateur.forEach(user => {
+             if(user.photo == ""){
 
-           user.photo = "../../../assets/icone_file/user.png";
+               user.photo = "../../../assets/icone_file/user.png";
 
-         }else{
-           user.photo = 'data:image/jpeg;base64,' + user.photo;
-         }
+             }else{
+               user.photo = 'data:image/jpeg;base64,' + user.photo;
 
+
+             }
        })
     },error => {
       console.log(error)
@@ -269,7 +275,9 @@ export class RHComponent implements OnInit {
   }
 
   loadListeTypeArchive(){
+    this.showPatienter = true;
     this.typeArchiveService.getAllTypeArchive().subscribe(value => {
+      this.showPatienter = false;
       this.listeTypeArchive = value;
     },error => {
       console.log(error)

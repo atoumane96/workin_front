@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="container-fluid">
   <ul class="breadcrumbs">
-    <li><a routerLink="/archive" class="white-text">Type archive</a></li>
+    <li><a routerLink="/archive" [queryParams]="{departement:departement.nomDepartement}" class="white-text"><i class="fa fa-laptop"></i></a></li>
     <li><a href="/dossier?type={{ nom }}" class="green-text">{{ nom | lowercase}}</a></li>
   </ul>
 </div>
@@ -19,13 +19,6 @@
           style="font-weight:bold;border-radius:100px">{{ dossier.nomDossier }}</h5>
     </a>
   </div>
-
-  <div class="fixed-action-btn">
-    <a data-target="modalCat" class="btn-floating btn-large grey darken-3 modal-trigger pulse">
-      <i class="material-icons">add</i>
-    </a>
-  </div>
-
 </div>
 
 <!--Nos utilisateurs -------------------------------------------------------------------->

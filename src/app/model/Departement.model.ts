@@ -1,5 +1,5 @@
 export interface Departement{
     id: Number;
-    nomDepartement: String;
-    numeroDepartement: String;
+    nomDepartement: string;
+    numeroDepartement: string;
 }

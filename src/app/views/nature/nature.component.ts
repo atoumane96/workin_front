@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import {NatureService} from "../../services/nature.service";
 
 import {ActivatedRoute} from "@angular/router";
+import {Departement} from "../../model/Departement.model";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-nature',
@@ -15,11 +17,14 @@ export class NatureComponent implements OnInit {
   listeNature:any=[];
   nomDossier:string;
   nomTypeArchive:string;
+  departement:Departement;
 
   constructor(private natureService:NatureService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private auth:AuthenticationService) { }
 
   ngOnInit() {
+    this.departement = this.auth.authenticatedUser.departement;
     this.route.queryParams
       .subscribe(params => {
           this.nomDossier = params.dossier+"";

@@ -53,6 +53,14 @@ footer {
  * Loading Dots
  * Can we use pseudo elements here instead :after?
  */
+
+.patienter {
+  color: black;
+  margin: 0;
+  font: .8em verdana;
+  letter-spacing: .1em;
+}
+
 .loading span {
   display: inline-block;
   vertical-align: middle;

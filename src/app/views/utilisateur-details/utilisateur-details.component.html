@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <div class="row">
+  <div class="row" style="margin-top: 25px;">
       <div class="col l4 m4 s12 card-panel" style="padding-top: 20px;border: 20px; margin-right: 10px;">
          <p *ngIf="utilisateur.etat" class="grey-text">Session : <span class="red-text">Bloquée </span> <i class="red-text fa fa-lock"></i></p>
          <p *ngIf="!utilisateur.etat" class="grey-text">Session : <span class="green-text">Active </span> <i class="green-text fa fa-unlock"></i></p>
@@ -9,17 +9,20 @@
           <span>{{utilisateur.prenom}}   </span>
           <span> {{utilisateur.nom | uppercase}}</span>
         </h5>
-        <p class="red-text"><span>Matricule : </span> {{ utilisateur.matricule }}</p>
+        <p class=""><span>Matricule : </span> <b>{{ utilisateur.matricule }}</b></p>
         <p class=""><span>Departement : </span><b>{{ utilisateur.departement.nomDepartement }}</b> </p>
         <p class=""><span>Date embauche : </span> <b>{{utilisateur.dateEmbauche | date }}</b></p>
         <p class=""><span>Salaire : </span> <b>{{utilisateur.salaire }} FCFA / mois</b></p>
         <a routerLink="/contrat" [queryParams]="{nom:utilisateur.nom,
                                                  prenom:utilisateur.prenom,
                                                  email: utilisateur.email}"
-           class="btn green" style="margin-top: 15px;
+           class="btn blue" style="margin-top: 15px;
                               margin-bottom: 30px;"><i class="fa fa-contao"></i> voir ses contrats</a>
+        <p class="blue btn-floating right"
+                       style="margin-top: 15px;
+                              margin-bottom: 30px;" (click)="editUser()"><i class="fa fa-pencil-square"></i></p>
        </div>
-      <div class="col l6 m6 s12 card-panel center-block" style="padding-top: 10px;">
+      <div class="col l6 m6 s12 card-panel center-block" style="padding-top: 10px;" *ngIf="!editUtilisateur">
         <div class="row">
           <div class="col s9 userSec">
             <h6><i class="fa fa-envelope"></i> email</h6><p><b>{{ utilisateur.email}}</b></p>
@@ -65,6 +68,80 @@
             <h6><i class="fa fa-user"></i> femmes</h6><p><b>{{ utilisateur.nombreFemme}}</b></p>
           </div>
         </div>
+      </div>
+      <div class="col l6 m6 s12 card-panel center-block" style="padding-top: 10px;" *ngIf="editUtilisateur">
+        <form  #F="ngForm" (ngSubmit)="editerUtilisateur(F.value)" >
+          <div class="row">
+            <div class="col s12 m6 l6 userSec">
+              <label>
+                <span>Email</span>
+                <input type="text"  class="col s12 l12 m12 black-text" value="{{ utilisateur.email}}" placeholder="{{ utilisateur.email}}">
+              </label>
+            </div>
+            <div class="col s12 l6 m6 userSec">
+              <label>
+                <span>Date de naissance</span>
+                <input type="date" class="col s12 l12 m12" value="{{ utilisateur.dateDeNaissance |date}}" placeholder="{{ utilisateur.dateDeNaissance |date}}">
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 l6 m6 userSec">
+              <label>
+                <span>Adresse</span>
+                <input type="text" value="{{ utilisateur.adresse}}">
+              </label>
+            </div>
+            <div class="col s12 l6 m6  userSec">
+              <label>
+                <span>Sexe</span>
+                <select class="browser-default">
+                  <option value="Homme" [selected]="utilisateur.sexe=='Homme'">Homme</option>
+                  <option value="Femme"  [selected]="utilisateur.sexe=='Femme'">Femme</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 l6 m6  userSec">
+              <label>
+                <span>Situation matrimoniale</span>
+                <select class="browser-default">
+                  <option value="Celibataire" [attr.selected]="utilisateur.situationMatri=='Celibataire'">Célibataire</option>
+                  <option value="Marie(e)" [attr.selected]="utilisateur.situationMatri=='Marie(e)'">Marie(e)</option>
+                </select>
+              </label>
+            </div>
+            <div class="col s12 l6 m6  userSec">
+              <label>
+                <span>Téléphone</span>
+                <input type="text" value="{{ utilisateur.telephone}}">
+              </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12 l6 m6 userSec">
+              <label>
+                <span>Nombre d'enfant</span>
+                <input type="number" min="0" class="col s12 l12 m12" value="{{ utilisateur.nombreEnfant}}">
+              </label>
+            </div>
+            <div class="col s12 l6 m6 userSec">
+              <label>
+                <span>Nombre de femme</span>
+                <input type="number" class="col s12 l12 m12" value="{{ utilisateur.nombreFemme}}">
+              </label>
+            </div>
+          </div>
+
+          <div class="row"  style="margin-top: 50px;">
+            <div class="col s12 m12 l12 userSec right">
+              <button class="btn spinner-blue"><i class="fa fa-save"></i>  Enregistrer</button>
+            </div>
+          </div>
+        </form>
+
       </div>
     </div>
 </div>

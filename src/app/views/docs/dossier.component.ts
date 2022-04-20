@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DossierService} from "../../services/dossier.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {Departement} from "../../model/Departement.model";
 
 
 declare var $: any;
@@ -14,11 +16,13 @@ export class DossierComponent implements OnInit {
   nom: string;
   listeDossier: any = [];
   typeArc: String;
+  departement:Departement;
   fichier: any;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private dossierService: DossierService) {
+              private dossierService: DossierService,
+              private auth:AuthenticationService) {
   }
 
   ngOnInit() {
@@ -30,7 +34,7 @@ export class DossierComponent implements OnInit {
           this.getAllDossier(this.typeArc.toString())
         }
       );
-
+     this.departement = this.auth.authenticatedUser.departement;
   }
 
   MyjsFunction() {

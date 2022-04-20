@@ -12,7 +12,7 @@
              <div class="input-field col l4 m4 s12">
                <img [src]="imgURL" alt="kds" class="responsive-img"
                style="width: 128px; height: 128px;"/>
-               <input type="file" formControlName="photo" (change)="onSelectFile($event)">
+               <input type="file" formControlName="photo" accept="image/**" (change)="onSelectFile($event)">
              </div>
              <div class="input-field col m4 s12 l4">
                <i class="material-icons prefix black-text">person</i>
@@ -39,13 +39,13 @@
                  <p class="black-text"><span class="red-text">*</span>Sexe</p>
                    <div>
                      <label>
-                       <input value="M" formControlName="sexe" type="radio" [attr.checked]="true" (change)="activeNombreFemme=true"/>
+                       <input value="Masculin" type="radio" formControlName="sexe" (change)="activeNombreFemme=true"/>
                        <span class="black-text">Homme</span>
                      </label>
                    </div>
                    <div style="margin-top: 15px">
                      <label>
-                       <input value="F" formControlName="sexe" type="radio" (change)="activeNombreFemme=null" />
+                       <input value="Féminin" formControlName="sexe" type="radio" (change)="activeNombreFemme=null" />
                        <span class="black-text">Femme</span>
                      </label>
                    </div>
@@ -54,13 +54,13 @@
                  <p class="black-text right-align" ><span class="red-text">*</span>Situation Matrimoniale</p>
                    <div class="right-align">
                      <label>
-                       <input value="C" formControlName="situationMatri" type="radio" checked />
+                       <input value="Célibataire" formControlName="situationMatri" type="radio" checked />
                        <span class="black-text">Célibatire</span>
                      </label>
                    </div>
                    <div class=" right-align" style="margin-top: 15px">
                      <label>
-                       <input  value="M" formControlName="situationMatri" type="radio" />
+                       <input  value="Marié(e)" formControlName="situationMatri" type="radio" />
                        <span class="black-text">Marié(e)</span>
                      </label>
                    </div>

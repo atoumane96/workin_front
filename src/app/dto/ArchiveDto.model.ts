@@ -6,7 +6,7 @@ export class ArchiveDto{
 
    nomFichier: string;
    extension:string;
-   utilisateur:Utilisateur;
+   idUser:number;
    nature:Nature;
 
 

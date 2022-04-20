@@ -3,7 +3,7 @@
         <div class="nav-wrapper">
           <div class="s12 m12 l12 xl12">
             <a routerLink="/dashboard" class="brand-logo center">
-              <img src="../../../assets/icone_file/logo.png " alt="logo" style="height: 65px;" />
+              <img src="../../../assets/icone_file/logo.png " alt="logo" style="height: 50px;" />
             </a>
             <ul  class="right hide-on-med-and-down">
               <li>
@@ -19,7 +19,7 @@
 
             <ul id="mobile-nav" class="sidenav">
                 <li>
-                  <div class="user-view  darken-4 z-depth-1" style="background: #01170c">
+                  <div class="user-view  darken-4 z-depth-1" id="backdash" >
                     <div>
                       <span class="right green-text"><i class="fa fa-circle"></i> en ligne</span>
                     </div>
@@ -29,9 +29,6 @@
                       <div class="col s8">
                          <span class="nom text-center">{{ utilisateur.prenom }} {{ utilisateur.nom | uppercase}} </span>
                         <br/>
-                        Matricule : <span class="green-text">{{utilisateur.matricule}}</span>
-                        <br/>
-                        Département : <span class="green-text">{{utilisateur.departement.nomDepartement}}</span>
                       </div>
                   </div>
                  </li>
@@ -42,7 +39,7 @@
                     </a>
                   </li>
                  <li>
-                   <a href=""  class="white-text hoverable"  routerLink="/archive">
+                   <a href=""  class="white-text hoverable"  routerLink="/archive" [queryParams]="{departement: utilisateur.departement.nomDepartement}">
                      <i class="material-icons white-text">file_present</i>
                        Gestion d'archives
                    </a>

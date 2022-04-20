@@ -1,68 +1,78 @@
 <app-navbar></app-navbar>
 
-<div class="container-fluid red">
-  <div>
-    <ul class="breadcrumbs">
-      <li><a  routerLink="/archive" class="white-text">Type archive</a></li>
-      <li><a routerLink="/dossier" [queryParams]="{type: nomTypeArchive}" class="white-text">{{ nomTypeArchive | lowercase}}</a></li>
-      <li><a routerLink="/nature"  [queryParams]="{dossier: nomDossier,typeArchive:nomTypeArchive}" class="white-text">{{ nomDossier | lowercase}}</a></li>
-      <li><a routerLink="/fichier" [queryParams]="{nature:natureArchive,dossier:nomDossier,typeArchive:nomTypeArchive}" class="green-text">{{ natureArchive | lowercase}}</a></li>
-    </ul>
+<div class='content-wrapper'>
+  <div class='navmenu'>
+    <form  autocomplete='off' id='search-form' method='get' style="margin-top: 5px;margin-bottom: 10px;margin-right: 10px;">
+      <label>
+        <input name='q' class="black-text" placeholder='Saisir le nom du fichier...' size='15' type='text'/>
+      </label>
+      <input id='button-submit' type='submit' value='Rechercher'/>
+    </form>
+    <nav itemprop='mainEntity' itemscope='itemscope' style="background: whitesmoke">
+      <ul>
+        <li><a routerLink="/archive"[queryParams]="{departement: departement.nomDepartement}"
+               class="green-text"><b>Type Archive |</b> </a></li>
+        <li><a routerLink="/dossier" [queryParams]="{type: nomTypeArchive}"
+               class="green-text"><b>{{ nomTypeArchive | lowercase}} | </b></a></li>
+        <li><a routerLink="/nature"
+               [queryParams]="{dossier: nomDossier,typeArchive:nomTypeArchive}" class="green-text">
+          <b>{{ nomDossier | lowercase}} |</b> </a></li>
+        <li><a routerLink="/dossier" [queryParams]="{type: nomTypeArchive}"
+               class="black-text"><b>{{ natureArchive | lowercase}}  </b></a></li>
+      </ul>
+    </nav>
   </div>
 </div>
+
 
 <!--<div class="container-fluid white" style="display: flex;flex-direction: row;justify-content: space-between">-->
 <!--  -->
 <!--</div>-->
 
-  <!--Nos utilisateurs -------------------------------------------------------------------->
-<div class="row">
-  <div class="col s11">
+
+
+
+
+<div class="tab_container">
+
+  <section id="content1" class="tab-content">
     <div class="row">
-      <div *ngFor="let fichier of listeFichier let i = index" class="card col s12 m2 l2" style="margin-left: 5px">
-        <span class="card-title activator grey-text text-darken-4"><i class="material-icons right">more_vert</i></span>
-        <a href="{{fichier.urlFichier}}" class="card-image waves-effect waves-block waves-light black-text" target="_blank">
-          <img *ngIf="fichier.extension == 'pdf'"   class="center-block" src="../../../assets/icone_file/pdf.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
-          <img *ngIf="fichier.extension == 'docx'"  class="center-block" src="../../../assets/icone_file/word.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
-          <img *ngIf="fichier.extension == 'pptx'"  class="center-block" src="../../../assets/icone_file/power%20.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
-          <img *ngIf="fichier.extension == 'xlsx'"  class="center-block" src="../../../assets/icone_file/excel.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
-          <img *ngIf="fichier.extension == 'png'
+      <div *ngFor="let fichier of listeFichier let i = index" class="card">
+        <div class="col s12 m4 l2 center">
+          <div class="card-panel">
+            <a href="{{fichier.urlFichier}}" target="_blank">
+              <img *ngIf="fichier.extension == 'pdf'"   class="center-block" src="../../../assets/icone_file/pdf.png" alt="ffichier" style="width: 80px; height: 80px;">
+              <img *ngIf="fichier.extension == 'docx'"  class="center-block" src="../../../assets/icone_file/word.png" alt="ffichier" style="width: 80px; height: 80px;">
+              <img *ngIf="fichier.extension == 'pptx'"  class="center-block" src="../../../assets/icone_file/power%20.png" alt="ffichier" style="width: 80px; height: 80px;">
+              <img *ngIf="fichier.extension == 'xlsx'"  class="center-block" src="../../../assets/icone_file/excel.png" alt="ffichier" style="width: 80px; height: 80px;">
+              <img *ngIf="fichier.extension == 'png'
                    || fichier.extension == 'jpg'
-                   || fichier.extension == 'jpeg'"  class="center-block" src="../../../assets/icone_file/img.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
-          <img *ngIf="   fichier.extension != 'pdf'
+                   || fichier.extension == 'jpeg'"  class="center-block" src="../../../assets/icone_file/img.png" alt="ffichier" style="width: 80px; height: 80px;">
+              <img *ngIf="   fichier.extension != 'pdf'
                       && fichier.extension != 'docx'
                       && fichier.extension != 'pptx'
                       && fichier.extension != 'xlsx'
                       && fichier.extension != 'png'
                       && fichier.extension != 'jpg'
-                      && fichier.extension != 'jpeg'"  class="center-block" src="../../../assets/icone_file/new.png" alt="ffichier" style="height: 100px;width: 100px;margin-top: 10px;">
+                      && fichier.extension != 'jpeg'"  class="center-block" src="../../../assets/icone_file/new.png" alt="ffichier" style="width: 80px; height: 80px;">
 
-          <p class="little-text">Nom : <b>{{fichier.nomFichier.substr(0,25)}}</b></p>
-          <p class="little-text">Numero : <b>{{fichier.numeroArchivage}}</b></p>
-          <p class="little-text">
-            <i class="fa fa-clock-o"></i>
-            Date : <b>
-            {{fichier.dateArchivage | date:'dd/MM/yyyy' }}  a
-            {{fichier.dateArchivage | date:'h:mm' }}</b>
-          </p>
-        </a>
-
-        <div class="card-reveal">
-          <span class="card-title titre-info">INFOS<i class="material-icons right">close</i></span>
-          <p class="little-text"><b>titre</b>  : {{fichier.nomFichier}}</p>
-          <p class="little-text"><b>nature</b> : {{fichier.nature.libelleNature}}</p>
-          <p class="little-text"><b>numero</b> : {{fichier.numeroArchivage}}</p>
-          <p class="little-text"><b>date publication</b> :  {{fichier.dateArchivage | date:'dd/MM/yyyy' }}
-                             {{fichier.dateArchivage | date:'h:mm:ss' }}</p>
-
-          <div class="col s6 l12 m12" style="margin-bottom: 10px;padding-top: 15px;">
-            <button (click)="allertSupprimerFichier(fichier.id)" class="btn-floating btn-small waves-effect waves-light red"><i class="fa fa-trash"></i></button>
-            <a style="margin: 10px;" class="btn-floating btn-small waves-effect waves-light orange"><i class="fa fa-pencil"></i></a>
-            <a href="{{fichier.urlFichier}}" target="_blank" class="btn-floating btn-small waves-effect waves-light green"><i class="fa fa-eye"></i></a>
+              <p class="black-text"><b>{{fichier.nomFichier.substr(0,25)}}</b></p>
+              <p class="little-text">
+                <i class="fa fa-clock-o"></i>
+                Date : <b>
+                {{fichier.dateArchivage | date:'dd/MM/yyyy' }}  a
+                {{fichier.dateArchivage | date:'h:mm' }}</b>
+              </p>
+            </a>
+            <div style="margin-top: 19px;">
+              <span class="supp blue-text" (click)="alertInfoArchive(i)"><i class="fa fa-info-circle"></i> Détails</span>
+              <span class="supp" (click)="allertSupprimerFichier(fichier.id,i)" style="margin-left: 12px; color: red"><i class="fa fa-trash"></i> Supprimer</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
+
 

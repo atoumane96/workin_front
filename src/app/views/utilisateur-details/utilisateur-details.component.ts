@@ -13,6 +13,7 @@ export class UtilisateurDetailsComponent implements OnInit {
 
   private emailUtilisateur:string = "";
   utilisateur:Utilisateur;
+  editUtilisateur:boolean = false;
   userForm: FormGroup;
 
   constructor( private route: ActivatedRoute,
@@ -41,4 +42,18 @@ export class UtilisateurDetailsComponent implements OnInit {
 
   }
 
+
+
+  editUser(){
+    this.editUtilisateur = !this.editUtilisateur;
+
+  }
+
+  onSubmitForm() {
+    let data = this.userForm.value;
+  }
+
+  editerUtilisateur(value: any) {
+
+  }
 }

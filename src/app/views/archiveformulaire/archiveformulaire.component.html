@@ -8,6 +8,7 @@
       <i class="fa fa-file-word-o"></i>
            ARCHIVAGE</h5>
   </div>
+  <!-- Loading....-->
   <div class="col s12 m12 l12" style="display: flex;justify-content: center" *ngIf="showPatienter">
     <div class="loading" style="margin-bottom: 20px;">
       <h2 class="patienter"><b>Archivage en cours...</b></h2>
@@ -22,6 +23,7 @@
       <span></span>
     </div>
   </div>
+  <!-- end loading....-->
   <form action="" [formGroup]="this.archiveService.dataForm" (ngSubmit)="addArchive()" enctype="multipart/form-data">
     <div class="col m8 l8 s12 transparent z-depth-4" style="margin-left: 250px;border-radius: 20px; border: 2px solid green">
       <div class="row">
